@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | BizConnect</title>
+
+  <link rel="stylesheet" href="../CSS/register.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- For icons -->
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logo">BI-Connect</div>
+    <nav class="nav-links">
+      <a href="./index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+    <div class="box">
+      <div class="form">
+        <h2>Create Your Account</h2>
+        <form id="registrationForm" novalidate>
+          <!-- Username -->
+          <div class="inputbox">
+            <input type="text" id="username" placeholder="Username" required>
+          </div>
+
+          <!-- Email -->
+          <div class="inputbox">
+            <input type="email" id="email" placeholder="Email" required>
+          </div>
+
+          <!-- Phone -->
+          <div class="inputbox">
+            <input type="text" id="phone" placeholder="Phone Number" required>
+          </div>
+
+          <!-- Password -->
+          <div class="inputbox">
+            <input type="password" id="password" placeholder="Password" required>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="inputbox">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <div id="passwordError" class="error-message" style="color: #ff6b6b; font-size: 0.85em;"></div>
+          </div>
+
+          <!-- User Type -->
+          <div class="selectbox">
+            <label for="userType">Select User Type:</label>
+            <select id="userType" required style="background-color: #5a4684; color: white; font-size: larger;">
+              <option value="" disabled selected>Select User Type</option>
+              <option value="Business People">Business People</option>
+              <option value="Investors">Investors</option>
+              <option value="Banker">Banker</option>
+              <option value="Business Advisor">Business Advisor</option>
+            </select>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="sub" id="registerBtn">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="./login.html">Login</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 BizConnect. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="./index.html">Home</a> | 
+        <a href="about.html">About Us</a> | 
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+
+<script type="module">
+  import { app, auth, db } from "./firebase-config.js";
+  import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+  import { ref, set } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+
+  const form = document.getElementById("registrationForm");
+  const registerBtn = document.getElementById("registerBtn");
+  const passwordError = document.getElementById("passwordError");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // Grab values
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const userType = document.getElementById("userType").value;
+
+    // Reset error message
+    passwordError.textContent = "";
+
+    // Validate fields
+    if (!username || !email || !phone || !password || !confirmPassword || !userType) {
+      alert("All fields are required!");
+      return;
+    }
+
+    // Validate phone (basic — 10 digits)
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("Enter a valid 10-digit phone number.");
+      return;
+    }
+
+    // Validate password match
+    if (password !== confirmPassword) {
+      passwordError.textContent = "Passwords do not match!";
+      return;
+    }
+
+    // Disable button during processing
+    registerBtn.disabled = true;
+    registerBtn.textContent = "Registering...";
+
+    const emailKey = email.replace(/\./g, ",");
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save user details in Realtime Database
+      await set(ref(db, 'users/' + emailKey), {
+        username,
+        email,
+        phone,
+        userType
+      });
+
+      alert("Registration Successful!");
+      window.location.href = "./index.html";
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert(error.message || "Registration failed. Please try again.");
+    } finally {
+      registerBtn.disabled = false;
+      registerBtn.textContent = "Register";
+    }
+  });
+</script>
+
+</body>
+</html>

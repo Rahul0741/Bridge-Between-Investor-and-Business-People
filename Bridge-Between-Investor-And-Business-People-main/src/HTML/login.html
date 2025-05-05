@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Bridge Between Investor And Business People</title>
+  <link rel="stylesheet" href="../CSS/login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">BI-Connect</div>
+    <nav class="nav-links">
+      <a href="./index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+<main class="main-content">
+  <div class="box">
+    <div class="form" id="loginForm">
+      <h2>Login</h2>
+
+      <div class="inputbox">
+        <input type="text" id="loginUsername" placeholder="Enter Email" required>
+        <!-- <span>Email</span> -->
+        <div id="emailError" class="error-message"></div>
+      </div>
+
+      <div class="inputbox">
+        <input type="password" id="loginPassword" placeholder="Enter Password" required>
+        <!-- <span>Password</span> -->
+        <div id="passwordError" class="error-message"></div>
+      </div>
+
+      <div class="inputbox" >
+        <label for="userType" style="color: white; margin-bottom: 5px;">Select user Type: </label>
+        <select id="loginUserType" required style="background-color: #5a4684; color: white; font-size: larger;">
+          <option value="" disabled selected>Select Role</option>
+          <option value="Business People">Business People</option>
+          <option value="Investors">Investors</option>
+          <option value="Banker">Banker</option>
+          <option value="Business Advisor">Business Advisor</option>
+        </select>
+      </div>
+
+      <button class="sub" id="login">Login</button>
+
+      <p><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
+      <p>Don't have an account? <a href="./register.html">Register</a></p>
+    </div>
+
+    <div class="forgot-password" id="forgotPassword">
+      <h2>Reset Password</h2>
+
+      <div class="inputbox">
+        <input type="email" id="resetEmail" placeholder="Enter your email" required>
+        <span>Email</span>
+      </div>
+
+      <button class="sub" id="resetPasswordButton">Submit</button>
+      <p><a href="#" id="backToLoginLink">Back to Login</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 BizConnect. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="./index.html">Home</a> | 
+      <a href="about.html">About Us</a> | 
+      <a href="contact.html">Contact Us</a>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="./loginScript.js"></script> <!-- Separated script for cleaner HTML -->
+</body>
+</html>
