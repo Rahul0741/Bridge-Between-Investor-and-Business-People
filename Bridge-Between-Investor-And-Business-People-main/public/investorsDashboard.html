@@ -74,12 +74,12 @@
           <h2>Contact for more details</h2>
           <div class="social-icons">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
+            <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
             <a href="#"><i class="fab fa-twitter"></i></a>
           </div>
         </div>
@@ -112,7 +112,7 @@
       const db = getDatabase(app);
       const auth = getAuth(app);
       const investorEmail = localStorage.getItem("email");
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("uid");
 
       const ideasRef = ref(db, "ideas");
       const ideasListDiv = document.getElementById("ideasList");
@@ -283,12 +283,14 @@
           return;
         }
 
-        const userDetailsRef = ref(db, "investorUsers/" + userId);
+        // Changed the reference path here from 'investorUsers' to 'users'
+        const userDetailsRef = ref(db, "users/" + userId);
         get(userDetailsRef)
           .then((snapshot) => {
             if (snapshot.exists()) {
               const data = snapshot.val();
-              userNameElem.textContent = data.username || "No Name";
+              userNameElem.textContent =
+                data.username || data.name || "No Name";
               userEmailElem.textContent = data.email || investorEmail;
             } else {
               userNameElem.textContent = "User not found";
