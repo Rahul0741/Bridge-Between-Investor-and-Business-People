@@ -600,6 +600,113 @@ footer {
   opacity: 0.6;
   cursor: not-allowed;
 }
+/* Query Button */
+.queries-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin-top: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.queries-btn:hover {
+  background-color: #e68900;
+}
+
+/* Query Popup Modal */
+.query-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+  display: none;
+}
+
+.query-popup-overlay.active {
+  display: block;
+}
+
+/* Query Popup Container */
+.query-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 500px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: black;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+}
+
+.query-popup.active {
+  display: flex;
+}
+
+/* Query Form */
+.query-popup textarea {
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.query-popup button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.query-popup button:hover {
+  background-color: #0056b3;
+}
+
+.query-popup .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Answers List */
+.answers-list {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.answer {
+  background-color: #f3f3f3;
+  color: #000;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.answer p {
+  margin: 4px 0;
+  font-size: 14px;
+}
 
 #allIdeasContainer {
   transition: all 0.5s ease;

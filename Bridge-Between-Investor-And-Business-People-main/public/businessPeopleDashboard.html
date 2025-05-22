@@ -1,188 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Business Dashboard</title>
-    <link rel="stylesheet" href="./businessPeopleDashboard.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="logo">
-          <i class="bi bi-boxes"></i>
-        </div>
-        <h1>Investor & Business Connect</h1>
-        <div class="profile-icon" id="profileToggle">
-          <i class="bi bi-person-circle"></i>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business Dashboard</title>
+  <link rel="stylesheet" href="./businessPeopleDashboard.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <i class="bi bi-boxes"></i>
       </div>
-      <div class="profile-dropdown" id="profileDropdown">
-        <div class="profile-header">
-          <img
-            id="profileImage"
-            class="profile-pic"
-            src="./Assets/profile.png"
-            alt="User"
-          />
-          <h3 id="userName">Loading...</h3>
-          <p id="userEmail">Loading...</p>
-          <button class="edit-btn">Edit Profile</button>
-        </div>
-        <div class="profile-options">
-          <button id="viewLoansButton" style="color: black">
-            <i class="bi bi-cash-coin"></i> View Loans
-          </button>
-          <button id="showAllIdeas" style="color: black">
-            <i class="bi bi-lightbulb"></i> Ideas Posted
-          </button>
-          <button id="logoutBtn">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </button>
-        </div>
+      <h1>Investor & Business Connect</h1>
+      <div class="profile-icon" id="profileToggle">
+        <i class="bi bi-person-circle"></i>
       </div>
-    </header>
-
-    <h2>Post a New Idea</h2>
-    <form id="postIdeaForm">
-      <div>
-        <label for="title">Title:</label
-        ><input type="text" id="title" required />
-      </div>
-      <div>
-        <label for="description">Description:</label
-        ><textarea id="description" rows="4" required></textarea>
-      </div>
-      <div>
-        <label for="targetMarket">Target Market:</label
-        ><input type="text" id="targetMarket" required />
-      </div>
-      <div>
-        <label for="estimatedBudget">Estimated Budget (₹):</label
-        ><input type="number" id="estimatedBudget" required />
-      </div>
-      <div>
-        <label for="category">Category:</label>
-        <select id="category">
-          <option value="Retail and E-commerce">Retail and E-commerce</option>
-          <option value="Food and Beverage">Food and Beverage</option>
-          <option value="Technology and Software">
-            Technology and Software
-          </option>
-          <option value="Healthcare and Wellness">
-            Healthcare and Wellness
-          </option>
-          <option value="Finance and Banking">Finance and Banking</option>
-          <option value="Education and Training">Education and Training</option>
-          <option value="Entertainment and Media">
-            Entertainment and Media
-          </option>
-          <option value="Real Estate and Construction">
-            Real Estate and Construction
-          </option>
-          <option value="Logistics and Transportation">
-            Logistics and Transportation
-          </option>
-          <option value="Fashion and Beauty">Fashion and Beauty</option>
-        </select>
-      </div>
-      <button type="submit">Post Idea</button>
-    </form>
-
-    <h2>Recently Posted Idea</h2>
-    <div id="recentIdea" class="idea-container"></div>
-
-    <div id="allIdeasContainer" style="display: none">
-      <div class="search-pagination-container">
-        <input type="text" id="searchBox" placeholder="Search by title..." />
-        <div id="paginationControls"></div>
-        <div id="collapseIdeasBtn">Collapse Ideas</div>
-      </div>
-
-      <div id="ideasList" class="idea-container"></div>
     </div>
+    <div class="profile-dropdown" id="profileDropdown">
+      <div class="profile-header">
+        <img id="profileImage" class="profile-pic" src="./Assets/profile.png" alt="User" />
+        <h3 id="userName">Loading...</h3>
+        <p id="userEmail">Loading...</p>
+        <button class="edit-btn">Edit Profile</button>
+      </div>
+      <div class="profile-options">
+        <button id="viewLoansButton" style="color: black;">
+          <i class="bi bi-cash-coin"></i> View Loans
+        </button>
+        <button id="showAllIdeas" style="color: black;">
+          <i class="bi bi-lightbulb"></i> Ideas Posted
+        </button>
+        <button id="logoutBtn">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <footer>
-      <div class="footer-left">
-        <img src="./Assets/contact.png" alt="Contact" class="footer-image" />
-        <div class="footer-content">
-          <h2>Contact for more details</h2>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"
-              ><i class="fab fa-linkedin-in"></i
-            ></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-          </div>
+  <h2>Post a New Idea</h2>
+  <form id="postIdeaForm">
+    <div><label for="title">Title:</label><input type="text" id="title" required></div>
+    <div><label for="description">Description:</label><textarea id="description" rows="4" required></textarea></div>
+    <div><label for="targetMarket">Target Market:</label><input type="text" id="targetMarket" required></div>
+    <div><label for="estimatedBudget">Estimated Budget (₹):</label><input type="number" id="estimatedBudget" required></div>
+    <div><label for="category">Category:</label>
+      <select id="category">
+        <option value="Retail and E-commerce">Retail and E-commerce</option>
+        <option value="Food and Beverage">Food and Beverage</option>
+        <option value="Technology and Software">Technology and Software</option>
+        <option value="Healthcare and Wellness">Healthcare and Wellness</option>
+        <option value="Finance and Banking">Finance and Banking</option>
+        <option value="Education and Training">Education and Training</option>
+        <option value="Entertainment and Media">Entertainment and Media</option>
+        <option value="Real Estate and Construction">Real Estate and Construction</option>
+        <option value="Logistics and Transportation">Logistics and Transportation</option>
+        <option value="Fashion and Beauty">Fashion and Beauty</option>
+      </select>
+    </div>
+    <button type="submit">Post Idea</button>
+  </form>
+
+  <h2>Recently Posted Idea</h2>
+  <div id="recentIdea" class="idea-container"></div>
+
+  <div id="allIdeasContainer" style="display: none;">
+    <div class="search-pagination-container">
+      <input type="text" id="searchBox" placeholder="Search by title..." />
+      <div id="paginationControls"></div>
+      <div id="collapseIdeasBtn">Collapse Ideas</div>
+    </div>
+    <div id="ideasList" class="idea-container"></div>
+  </div>
+
+  <!-- Query Form Popup -->
+  <div class="overlay" id="queryOverlay"></div>
+  <div class="popup" id="queryPopup">
+    <span class="close-btn" id="closeQueryPopup">&times;</span>
+    <h3>Submit a Query</h3>
+    <textarea id="queryTextPopup" rows="4" placeholder="Type your query..."></textarea>
+    <button id="submitQueryBtn">Submit Query</button>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <img src="./Assets/contact.png" alt="Contact" class="footer-image">
+      <div class="footer-content">
+        <h2>Contact for more details</h2>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
         </div>
       </div>
-      <div class="footer-right">
-        <p><strong>Email Address:</strong> hello@yourplatform.com</p>
-        <p>
-          <strong>Mailing Address:</strong> 123 Anywhere St, Any City, Country
-          12345
-        </p>
-        <p><strong>Phone Number:</strong> (123) 456 7890</p>
-      </div>
-    </footer>
+    </div>
+    <div class="footer-right">
+      <p><strong>Email Address:</strong> hello@yourplatform.com</p>
+      <p><strong>Mailing Address:</strong> 123 Anywhere St, Any City, Country 12345</p>
+      <p><strong>Phone Number:</strong> (123) 456 7890</p>
+    </div>
+  </footer>
+
 
     <script type="module">
       // businessPeopleDashboard.js
-      import { db } from "./firebase-config.js";
+      import { db, auth } from './firebase-config.js';
       import {
         ref,
         push,
         update,
         onValue,
         get,
-      } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+        onChildAdded
+      } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js';
 
-      const businessUid = localStorage.getItem("uid");
-      const businessEmail = localStorage.getItem("email");
+      const businessUid = localStorage.getItem('uid');
+      const businessEmail = localStorage.getItem('email');
       if (!businessUid || !businessEmail) {
-        alert("Error: User info missing. Please log in.");
-        throw new Error("Missing UID/Email.");
+        alert('Error: User info missing. Please log in.');
+        throw new Error('Missing UID/Email.');
       }
 
       const userIdeasRef = ref(db, `ideas/${businessUid}`);
       const userDetailsRef = ref(db, `users/${businessUid}`);
 
-      const recentIdeaDiv = document.getElementById("recentIdea");
-      const ideasListDiv = document.getElementById("ideasList");
-      const postIdeaForm = document.getElementById("postIdeaForm");
-      const allIdeasContainer = document.getElementById("allIdeasContainer");
-      const collapseBtn = document.getElementById("collapseIdeasBtn");
+      const recentIdeaDiv = document.getElementById('recentIdea');
+      const ideasListDiv = document.getElementById('ideasList');
+      const postIdeaForm = document.getElementById('postIdeaForm');
+      const allIdeasContainer = document.getElementById('allIdeasContainer');
+      const collapseBtn = document.getElementById('collapseIdeasBtn');
+      const showAllIdeasBtn = document.getElementById('showAllIdeas');
+      const overlay = document.getElementById('queryOverlay');
+      const popup = document.getElementById('queryPopup');
+      const closeQueryPopup = document.getElementById('closeQueryPopup');
+      const queryTextPopup = document.getElementById('queryTextPopup');
+      const submitQueryBtn = document.getElementById('submitQueryBtn');
 
-      const showAllIdeasBtn = document.getElementById("showAllIdeas");
-      showAllIdeasBtn.addEventListener("click", () => {
-        allIdeasContainer.style.display = "block";
-        collapseBtn.style.display = "inline-block";
-        localStorage.setItem("ideasExpanded", "true");
+      let selectedIdeaKey = null;
+
+      showAllIdeasBtn.addEventListener('click', () => {
+        allIdeasContainer.style.display = 'block';
+        collapseBtn.style.display = 'inline-block';
+        localStorage.setItem('ideasExpanded', 'true');
       });
 
-      collapseBtn.addEventListener("click", () => {
-        allIdeasContainer.style.display = "none";
-        collapseBtn.style.display = "none";
-        recentIdeaDiv.scrollIntoView({ behavior: "smooth" });
-        localStorage.setItem("ideasExpanded", "false");
+      collapseBtn.addEventListener('click', () => {
+        allIdeasContainer.style.display = 'none';
+        collapseBtn.style.display = 'none';
+        recentIdeaDiv.scrollIntoView({ behavior: 'smooth' });
+        localStorage.setItem('ideasExpanded', 'false');
       });
 
-      window.addEventListener("DOMContentLoaded", () => {
-        const expanded = localStorage.getItem("ideasExpanded") === "true";
+      window.addEventListener('DOMContentLoaded', () => {
+        const expanded = localStorage.getItem('ideasExpanded') === 'true';
         if (expanded) {
-          allIdeasContainer.style.display = "block";
-          collapseBtn.style.display = "inline-block";
+          allIdeasContainer.style.display = 'block';
+          collapseBtn.style.display = 'inline-block';
         }
       });
 
@@ -190,103 +166,80 @@
       let currentPage = 1;
       const ITEMS_PER_PAGE = 6;
 
-      postIdeaForm.addEventListener("submit", (e) => {
+      postIdeaForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const newIdea = {
-          title: document.getElementById("title").value,
-          description: document.getElementById("description").value,
-          targetMarket: document.getElementById("targetMarket").value,
-          estimatedBudget: document.getElementById("estimatedBudget").value,
-          category: document.getElementById("category").value,
+          title: document.getElementById('title').value,
+          description: document.getElementById('description').value,
+          targetMarket: document.getElementById('targetMarket').value,
+          estimatedBudget: document.getElementById('estimatedBudget').value,
+          category: document.getElementById('category').value,
           timestamp: Date.now(),
-          status: "Pending",
+          status: 'Pending',
           email: businessEmail,
         };
         push(userIdeasRef, newIdea)
           .then(() => {
-            alert("Idea posted successfully!");
+            alert('Idea posted successfully!');
             postIdeaForm.reset();
           })
-          .catch((error) => console.error("Error posting idea:", error));
+          .catch((error) => console.error('Error posting idea:', error));
       });
 
       onValue(userIdeasRef, (snapshot) => {
-        ideasListDiv.innerHTML =
-          '<div class="loader">Loading your ideas...</div>';
-        recentIdeaDiv.innerHTML = "";
+        ideasListDiv.innerHTML = '<div class="loader">Loading your ideas...</div>';
+        recentIdeaDiv.innerHTML = '';
         if (!snapshot.exists()) {
-          recentIdeaDiv.innerHTML = "<p>No ideas found!</p>";
+          recentIdeaDiv.innerHTML = '<p>No ideas found!</p>';
           return;
         }
         const data = snapshot.val();
-        const sortedKeys = Object.keys(data).sort(
-          (a, b) => data[b].timestamp - data[a].timestamp
-        );
+        const sortedKeys = Object.keys(data).sort((a, b) => data[b].timestamp - data[a].timestamp);
         allIdeas = sortedKeys.map((key) => ({ key, data: data[key] }));
         renderIdeas([allIdeas[0]], recentIdeaDiv, false);
         renderIdeas(allIdeas, ideasListDiv, true);
       });
 
       function renderIdeas(ideas, container, withPagination) {
-        container.innerHTML = "";
-        const paginated = withPagination
-          ? ideas.slice(
-              (currentPage - 1) * ITEMS_PER_PAGE,
-              currentPage * ITEMS_PER_PAGE
-            )
-          : ideas;
+        container.innerHTML = '';
+        const paginated = withPagination ? ideas.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE) : ideas;
         paginated.forEach(({ key, data }) => {
-          const ideaDiv = document.createElement("div");
-          ideaDiv.classList.add("idea");
-          let actionHTML = "";
-          if (data.status === "Accepted") {
-            actionHTML = `<p><strong>Investor Email:</strong> ${
-              data.acceptedBy
-            }</p>
-          <p><strong>Accepted On:</strong> ${new Date(
-            data.acceptedOn
-          ).toLocaleString()}</p>
-          <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-          <button class="approved-btn" disabled>Approved</button>`;
-          } else if (
-            data.status === "Under Progress" ||
-            data.status === "Pending"
-          ) {
+          const ideaDiv = document.createElement('div');
+          ideaDiv.classList.add('idea');
+          let actionHTML = '';
+          if (data.status === 'Accepted') {
+            actionHTML = `<p><strong>Investor Email:</strong> ${data.acceptedBy}</p>
+              <p><strong>Accepted On:</strong> ${new Date(data.acceptedOn).toLocaleString()}</p>
+              <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+              <button class="approved-btn" disabled>Approved</button>`;
+          } else if (data.status === 'Under Progress' || data.status === 'Pending') {
             if (data.acceptedBy && data.acceptedOn && data.termsConditions) {
-              actionHTML = `<p><strong>Investor Email:</strong> ${
-                data.acceptedBy
-              }</p>
-            <p><strong>Accepted On:</strong> ${new Date(
-              data.acceptedOn
-            ).toLocaleString()}</p>
-            <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-            <button class="accept-btn" data-id="${key}">Accept</button>
-            <button class="reject-btn" data-id="${key}">Reject</button>`;
+              actionHTML = `<p><strong>Investor Email:</strong> ${data.acceptedBy}</p>
+                <p><strong>Accepted On:</strong> ${new Date(data.acceptedOn).toLocaleString()}</p>
+                <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+                <button class="accept-btn" data-id="${key}">Accept</button>
+                <button class="reject-btn" data-id="${key}">Reject</button>`;
             } else {
               actionHTML = `<p><em>Waiting for investor response and terms before action can be taken.</em></p>`;
             }
-          } else if (data.status === "Rejected") {
-            actionHTML = `<p><strong>Rejected By:</strong> ${
-              data.rejectedBy || "N/A"
-            }</p>
-          <p><strong>Rejected On:</strong> ${
-            data.rejectedOn ? new Date(data.rejectedOn).toLocaleString() : "N/A"
-          }</p>
-          <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-          <button class="reject-btn" disabled>Rejected</button>`;
+          } else if (data.status === 'Rejected') {
+            actionHTML = `<p><strong>Rejected By:</strong> ${data.rejectedBy || 'N/A'}</p>
+              <p><strong>Rejected On:</strong> ${data.rejectedOn ? new Date(data.rejectedOn).toLocaleString() : 'N/A'}</p>
+              <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+              <button class="reject-btn" disabled>Rejected</button>`;
           }
 
           ideaDiv.innerHTML = `
-        <h3>${data.title}</h3>
-        <p><strong>Description:</strong> ${data.description}</p>
-        <p><strong>Target Market:</strong> ${data.targetMarket}</p>
-        <p><strong>Estimated Budget:</strong> ₹${data.estimatedBudget}</p>
-        <p><strong>Category:</strong> ${data.category}</p>
-        <p><strong>Status:</strong> ${data.status}</p>
-        <p id="queryCount-${key}"><em>Loading query count...</em></p>
-        ${actionHTML}
-        <button class="queries-btn" data-id="${key}">Queries</button>
-      `;
+            <h3>${data.title}</h3>
+            <p><strong>Description:</strong> ${data.description}</p>
+            <p><strong>Target Market:</strong> ${data.targetMarket}</p>
+            <p><strong>Estimated Budget:</strong> ₹${data.estimatedBudget}</p>
+            <p><strong>Category:</strong> ${data.category}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            <p id="queryCount-${key}"><em>Loading query count...</em></p>
+            ${actionHTML}
+            <button class="queries-btn" data-id="${key}">Queries</button>
+          `;
           container.appendChild(ideaDiv);
 
           const queryRef = ref(db, `queries/${businessUid}/${key}`);
@@ -297,50 +250,45 @@
               const queryCount = Object.keys(queries).length;
               let advisorResponded = false;
               for (const qid in queries) {
-                if (
-                  queries[qid].answers &&
-                  Object.values(queries[qid].answers).some(
-                    (ans) => ans.answeredByAdvisor
-                  )
-                ) {
+                if (queries[qid].answers && Object.values(queries[qid].answers).some(ans => ans.answeredByAdvisor)) {
                   advisorResponded = true;
                   break;
                 }
               }
               countEl.textContent = `Queries posted: ${queryCount}`;
               if (advisorResponded) {
-                const badge = document.createElement("span");
-                badge.textContent = " 🔔 Advisor replied";
-                badge.style.color = "green";
+                const badge = document.createElement('span');
+                badge.textContent = ' 🔔 Advisor replied';
+                badge.style.color = 'green';
                 countEl.appendChild(badge);
               }
             } else {
-              countEl.textContent = "Queries posted: 0";
+              countEl.textContent = 'Queries posted: 0';
             }
           });
 
-          ideaDiv
-            .querySelector(".queries-btn")
-            .addEventListener("click", () => {
-              window.location.href = `businessqueries.html?ideaKey=${key}`;
-            });
+          ideaDiv.querySelector('.queries-btn').addEventListener('click', () => {
+            selectedIdeaKey = key;
+            overlay.classList.add('active');
+            popup.classList.add('active');
+          });
 
-          const acceptBtn = ideaDiv.querySelector(".accept-btn");
-          const rejectBtn = ideaDiv.querySelector(".reject-btn");
+          const acceptBtn = ideaDiv.querySelector('.accept-btn');
+          const rejectBtn = ideaDiv.querySelector('.reject-btn');
           if (acceptBtn) {
-            acceptBtn.addEventListener("click", () => {
+            acceptBtn.addEventListener('click', () => {
               update(ref(db, `ideas/${businessUid}/${key}`), {
-                status: "Accepted",
-              }).then(() => alert("You accepted the idea."));
+                status: 'Accepted',
+              }).then(() => alert('You accepted the idea.'));
             });
           }
           if (rejectBtn) {
-            rejectBtn.addEventListener("click", () => {
+            rejectBtn.addEventListener('click', () => {
               update(ref(db, `ideas/${businessUid}/${key}`), {
-                status: "Rejected",
+                status: 'Rejected',
                 rejectedBy: businessEmail,
                 rejectedOn: Date.now(),
-              }).then(() => alert("Idea rejected successfully!"));
+              }).then(() => alert('Idea rejected successfully!'));
             });
           }
         });
@@ -349,13 +297,13 @@
 
       function renderPaginationControls(totalItems) {
         const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-        const container = document.getElementById("paginationControls");
-        container.innerHTML = "";
+        const container = document.getElementById('paginationControls');
+        container.innerHTML = '';
         for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement("button");
+          const btn = document.createElement('button');
           btn.textContent = i;
           if (i === currentPage) btn.disabled = true;
-          btn.addEventListener("click", () => {
+          btn.addEventListener('click', () => {
             currentPage = i;
             renderIdeas(allIdeas, ideasListDiv, true);
           });
@@ -363,47 +311,73 @@
         }
       }
 
-      document.getElementById("searchBox").addEventListener("input", (e) => {
+      document.getElementById('searchBox').addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase();
-        const filtered = allIdeas.filter(({ data }) =>
-          data.title.toLowerCase().includes(query)
-        );
+        const filtered = allIdeas.filter(({ data }) => data.title.toLowerCase().includes(query));
         currentPage = 1;
         renderIdeas(filtered, ideasListDiv, true);
       });
 
-      document.getElementById("logoutBtn").addEventListener("click", () => {
+      document.getElementById('logoutBtn').addEventListener('click', () => {
         localStorage.clear();
-        window.location.href = "./login.html";
+        window.location.href = './login.html';
       });
 
-      document
-        .getElementById("viewLoansButton")
-        .addEventListener("click", () => {
-          window.location.href = "loanforbusiness.html";
-        });
+      document.getElementById('viewLoansButton').addEventListener('click', () => {
+        window.location.href = 'loanforbusiness.html';
+      });
 
-      const toggleBtn = document.getElementById("profileToggle");
-      const dropdown = document.getElementById("profileDropdown");
-      const userNameElem = document.getElementById("userName");
-      const userEmailElem = document.getElementById("userEmail");
+      const toggleBtn = document.getElementById('profileToggle');
+      const dropdown = document.getElementById('profileDropdown');
+      const userNameElem = document.getElementById('userName');
+      const userEmailElem = document.getElementById('userEmail');
 
-      toggleBtn.addEventListener("click", () => {
-        dropdown.classList.toggle("show");
+      toggleBtn.addEventListener('click', () => {
+        dropdown.classList.toggle('show');
         get(userDetailsRef).then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            userNameElem.textContent = data.username || "No Name";
+            userNameElem.textContent = data.username || 'No Name';
             userEmailElem.textContent = data.email || businessEmail;
           }
         });
       });
 
-      window.addEventListener("click", (e) => {
+      window.addEventListener('click', (e) => {
         if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
-          dropdown.classList.remove("show");
+          dropdown.classList.remove('show');
         }
       });
+
+      closeQueryPopup.addEventListener('click', () => {
+        overlay.classList.remove('active');
+        popup.classList.remove('active');
+        queryTextPopup.value = '';
+        selectedIdeaKey = null;
+      });
+
+      submitQueryBtn.addEventListener('click', () => {
+        const question = queryTextPopup.value.trim();
+        if (!question || !selectedIdeaKey) return alert('Enter your query.');
+
+        const queryRef = ref(db, `queries/${businessUid}/${selectedIdeaKey}`);
+        const newQuery = {
+          question,
+          timestamp: Date.now()
+        };
+
+        push(queryRef, newQuery).then(() => {
+          alert('Query submitted!');
+          overlay.classList.remove('active');
+          popup.classList.remove('active');
+          queryTextPopup.value = '';
+          selectedIdeaKey = null;
+        }).catch((err) => {
+          alert('Failed to submit query');
+          console.error(err);
+        });
+      });
+
     </script>
   </body>
 </html>
