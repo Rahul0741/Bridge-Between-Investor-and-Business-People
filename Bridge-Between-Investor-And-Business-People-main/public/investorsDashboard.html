@@ -1,239 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Dashboard</title>
-  <link rel="stylesheet" href="./investorsDashboard.css">
-  <link rel="stylesheet" href="./businessPeopleDashboard.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">
-        <i class="bi bi-boxes"></i>
-      </div>
-      <h1>Investor & Business Connect</h1>
-      <div class="profile-icon" id="profileToggle">
-        <i class="bi bi-person-circle"></i>
-      </div>
-    </div>
-    <div class="profile-dropdown" id="profileDropdown">
-      <div class="profile-header">
-        <img id="profileImage" class="profile-pic" src="./Assets/profile.png" alt="User" />
-        <h3 id="userName">Loading...</h3>
-        <p id="userEmail">Loading...</p>
-        <button class="edit-btn">Edit Profile</button>
-      </div>
-      <div class="profile-options">
-        <button id="logoutBtn">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <h2>Explore Business Ideas</h2>
-  <div class="search-pagination-container">
-    <input type="text" id="searchBox" placeholder="Search by title..." />
-    <div id="paginationControls"></div>
-  </div>
-
-  <div id="ideasList" class="idea-container"></div>
-
-  <!-- Popup -->
-  <div class="overlay" id="popupOverlay"></div>
-  <div class="popup" id="popupForm">
-    <span class="close-btn" id="popupCloseBtn">&times;</span>
-    <h3>Terms and Conditions</h3>
-    <textarea id="termsConditions" placeholder="Enter terms and conditions"></textarea>
-    <button id="submitTnC">Submit</button>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-left">
-      <img src="./Assets/contact.png" alt="Contact" class="footer-image" />
-      <div class="footer-content">
-        <h2>Contact for more details</h2>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investor Dashboard</title>
+    <link rel="stylesheet" href="./investorsDashboard.css" />
+    <link rel="stylesheet" href="./businessPeopleDashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo">
+          <i class="bi bi-boxes"></i>
+        </div>
+        <h1>Investor & Business Connect</h1>
+        <div class="profile-icon" id="profileToggle">
+          <i class="bi bi-person-circle"></i>
         </div>
       </div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="profile-header">
+          <img
+            id="profileImage"
+            class="profile-pic"
+            src="./Assets/profile.png"
+            alt="User"
+          />
+          <h3 id="userName">Loading...</h3>
+          <p id="userEmail">Loading...</p>
+          <button class="edit-btn">Edit Profile</button>
+        </div>
+        <div class="profile-options">
+          <button id="logoutBtn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <h2>Explore Business Ideas</h2>
+    <div class="search-pagination-container">
+      <input type="text" id="searchBox" placeholder="Search by title..." />
+      <div id="paginationControls"></div>
     </div>
-    <div class="footer-right">
-      <p><strong>Email Address:</strong> hello@yourplatform.com</p>
-      <p><strong>Mailing Address:</strong> 123 Anywhere St, Any City, Country 12345</p>
-      <p><strong>Phone Number:</strong> (123) 456 7890</p>
+
+    <div id="ideasList" class="idea-container"></div>
+
+    <!-- Popup -->
+    <div class="overlay" id="popupOverlay"></div>
+    <div class="popup" id="popupForm">
+      <span class="close-btn" id="popupCloseBtn">&times;</span>
+      <h3>Terms and Conditions</h3>
+      <textarea
+        id="termsConditions"
+        placeholder="Enter terms and conditions"
+      ></textarea>
+      <button id="submitTnC">Submit</button>
     </div>
-  </footer>
 
-   <script type="module">
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        <img src="./Assets/contact.png" alt="Contact" class="footer-image" />
+        <div class="footer-content">
+          <h2>Contact for more details</h2>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-right">
+        <p><strong>Email Address:</strong> hello@yourplatform.com</p>
+        <p>
+          <strong>Mailing Address:</strong> 123 Anywhere St, Any City, Country
+          12345
+        </p>
+        <p><strong>Phone Number:</strong> (123) 456 7890</p>
+      </div>
+    </footer>
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getDatabase, ref, update, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-    import { app, auth } from "./firebase-config.js";
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        update,
+        onValue,
+        get,
+      } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+      import { app } from "./firebase-config.js";
 
-    const db = getDatabase(app);
-    const investorEmail = localStorage.getItem('email');
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      const investorEmail = localStorage.getItem("email");
+      const userId = localStorage.getItem("userId");
 
-    const ideasRef = ref(db, 'ideas');
-    const ideasListDiv = document.getElementById('ideasList');
-    const popupOverlay = document.getElementById('popupOverlay');
-    const popupForm = document.getElementById('popupForm');
-    const popupCloseBtn = document.getElementById('popupCloseBtn');
-    const termsConditionsInput = document.getElementById('termsConditions');
-    const submitTnC = document.getElementById('submitTnC');
-    const searchInput = document.getElementById('searchBox');
-    const paginationControls = document.getElementById('paginationControls');
+      const ideasRef = ref(db, "ideas");
+      const ideasListDiv = document.getElementById("ideasList");
+      const popupOverlay = document.getElementById("popupOverlay");
+      const popupForm = document.getElementById("popupForm");
+      const popupCloseBtn = document.getElementById("popupCloseBtn");
+      const termsConditionsInput = document.getElementById("termsConditions");
+      const submitTnC = document.getElementById("submitTnC");
+      const searchInput = document.getElementById("searchBox");
+      const paginationControls = document.getElementById("paginationControls");
 
-    let currentIdeaRef = null;
-    let allIdeas = []; // { key, userKey, ideaKey, data }
-    let currentPage = 1;
-    const ITEMS_PER_PAGE = 6;
-    
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = './login.html';
-  });
+      const toggleBtn = document.getElementById("profileToggle");
+      const dropdown = document.getElementById("profileDropdown");
+      const userNameElem = document.getElementById("userName");
+      const userEmailElem = document.getElementById("userEmail");
 
-    popupCloseBtn.addEventListener('click', () => {
-    popupOverlay.classList.remove('active');
-    popupForm.classList.remove('active');
-    termsConditionsInput.value = '';
-    currentIdeaRef = null;
-    });
+      let currentIdeaRef = null;
+      let allIdeas = [];
+      let currentPage = 1;
+      const ITEMS_PER_PAGE = 6;
 
-    submitTnC.addEventListener('click', () => {
-    const terms = termsConditionsInput.value.trim();
-    if (!terms || !currentIdeaRef) return alert("Please enter Terms & Conditions.");
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear();
+        window.location.href = "./login.html";
+      });
 
-    update(currentIdeaRef, {
-        status: 'Under Progress',
-        acceptedBy: investorEmail,
-        acceptedOn: new Date().toLocaleString(),
-        termsConditions: terms
-    }).then(() => {
-        popupOverlay.classList.remove('active');
-        popupForm.classList.remove('active');
-        termsConditionsInput.value = '';
+      popupCloseBtn.addEventListener("click", () => {
+        popupOverlay.classList.remove("active");
+        popupForm.classList.remove("active");
+        termsConditionsInput.value = "";
         currentIdeaRef = null;
-        alert('Proposal accepted successfully!');
-    }).catch(err => alert("Error updating: " + err.message));
-    });
+      });
 
-    function renderIdeas(filteredIdeas) {
-    ideasListDiv.innerHTML = '';
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    const paginated = filteredIdeas.slice(start, start + ITEMS_PER_PAGE);
+      submitTnC.addEventListener("click", () => {
+        const terms = termsConditionsInput.value.trim();
+        if (!terms || !currentIdeaRef)
+          return alert("Please enter Terms & Conditions.");
 
-    paginated.forEach(({ key, userKey, ideaKey, data }) => {
-        const div = document.createElement('div');
-        div.className = 'idea';
+        update(currentIdeaRef, {
+          status: "Under Progress",
+          acceptedBy: investorEmail,
+          acceptedOn: new Date().toLocaleString(),
+          termsConditions: terms,
+        })
+          .then(() => {
+            popupOverlay.classList.remove("active");
+            popupForm.classList.remove("active");
+            termsConditionsInput.value = "";
+            currentIdeaRef = null;
+            alert("Proposal accepted successfully!");
+          })
+          .catch((err) => alert("Error updating: " + err.message));
+      });
 
-        let extra = '';
-        if (data.status === 'Pending') {
-        extra = `<button class="accept-btn" data-user="${userKey}" data-id="${ideaKey}">Accept Proposal</button>`;
-        } else if (data.status === 'Under Progress') {
-        extra = `
-            <p><strong>Requested By:</strong> ${data.acceptedBy}</p>
-            <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-            <p><strong>Requested On:</strong> ${data.acceptedOn}</p>
-            <button class="disabled-btn" disabled>Proposal Under Progress</button>`;
-        } else if (data.status === 'Accepted') {
-        extra = `
-            <p><strong>Accepted By:</strong> ${data.acceptedBy}</p>
-            <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-            <p><strong>Accepted On:</strong> ${data.acceptedOn}</p>
-            <button class="disabled-btn" disabled>Proposal Accepted Successfully</button>`;
-        } else if (data.status === 'Rejected') {
-        extra = `
-            <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
-            <button class="disabled-btn rejected-btn" disabled>Proposal Rejected</button>`;
-        }
+      function renderIdeas(filteredIdeas) {
+        ideasListDiv.innerHTML = "";
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        const paginated = filteredIdeas.slice(start, start + ITEMS_PER_PAGE);
 
-        if (data.businessResponse) {
-        extra += `<p style="color: darkorange;"><strong>Query from Business:</strong> ${data.businessResponse}</p>`;
-        }
+        paginated.forEach(({ key, userKey, ideaKey, data }) => {
+          const div = document.createElement("div");
+          div.className = "idea";
 
-        div.innerHTML = `
-        <h3>${data.title}</h3>
-        <p><strong>Description:</strong> ${data.description}</p>
-        <p><strong>Target Market:</strong> ${data.targetMarket}</p>
-        <p><strong>Estimated Budget:</strong> ₹${data.estimatedBudget}</p>
-        <p><strong>Category:</strong> ${data.category}</p>
-        <p><strong>Status:</strong> ${data.status}</p>
-        <p><strong>Business Email:</strong> ${data.email}</p>
-        ${extra}
-        `;
+          let extra = "";
+          if (data.status === "Pending") {
+            extra = `<button class="accept-btn" data-user="${userKey}" data-id="${ideaKey}">Accept Proposal</button>`;
+          } else if (data.status === "Under Progress") {
+            extra = `
+              <p><strong>Requested By:</strong> ${data.acceptedBy}</p>
+              <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+              <p><strong>Requested On:</strong> ${data.acceptedOn}</p>
+              <button class="disabled-btn" disabled>Proposal Under Progress</button>`;
+          } else if (data.status === "Accepted") {
+            extra = `
+              <p><strong>Accepted By:</strong> ${data.acceptedBy}</p>
+              <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+              <p><strong>Accepted On:</strong> ${data.acceptedOn}</p>
+              <button class="disabled-btn" disabled>Proposal Accepted Successfully</button>`;
+          } else if (data.status === "Rejected") {
+            extra = `
+              <p><strong>Terms & Conditions:</strong> ${data.termsConditions}</p>
+              <button class="disabled-btn rejected-btn" disabled>Proposal Rejected</button>`;
+          }
 
-        if (data.status === 'Pending') {
-        div.querySelector('.accept-btn').addEventListener('click', (e) => {
-            const btn = e.target;
-            const userId = btn.getAttribute('data-user');
-            const ideaId = btn.getAttribute('data-id');
-            currentIdeaRef = ref(db, `ideas/${userId}/${ideaId}`);
-            popupOverlay.classList.add('active');
-            popupForm.classList.add('active');
-        });
-        }
+          if (data.businessResponse) {
+            extra += `<p style="color: darkorange;"><strong>Query from Business:</strong> ${data.businessResponse}</p>`;
+          }
 
-        ideasListDiv.appendChild(div);
-    });
+          div.innerHTML = `
+            <h3>${data.title}</h3>
+            <p><strong>Description:</strong> ${data.description}</p>
+            <p><strong>Target Market:</strong> ${data.targetMarket}</p>
+            <p><strong>Estimated Budget:</strong> ₹${data.estimatedBudget}</p>
+            <p><strong>Category:</strong> ${data.category}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            <p><strong>Business Email:</strong> ${data.email}</p>
+            ${extra}
+          `;
 
-    renderPaginationControls(filteredIdeas.length);
-    }
-
-    function renderPaginationControls(total) {
-    paginationControls.innerHTML = '';
-    const pages = Math.ceil(total / ITEMS_PER_PAGE);
-    for (let i = 1; i <= pages; i++) {
-        const btn = document.createElement('button');
-        btn.textContent = i;
-        if (i === currentPage) btn.disabled = true;
-        btn.addEventListener('click', () => {
-        currentPage = i;
-        renderIdeas(allIdeas);
-        });
-        paginationControls.appendChild(btn);
-    }
-    }
-
-    onValue(ideasRef, (snap) => {
-    if (snap.exists()) {
-        const ideasData = snap.val();
-        const combined = [];
-        for (const userKey in ideasData) {
-        for (const ideaKey in ideasData[userKey]) {
-            combined.push({
-            key: `${userKey}-${ideaKey}`,
-            userKey,
-            ideaKey,
-            data: ideasData[userKey][ideaKey]
+          if (data.status === "Pending") {
+            div.querySelector(".accept-btn").addEventListener("click", (e) => {
+              const btn = e.target;
+              const userId = btn.getAttribute("data-user");
+              const ideaId = btn.getAttribute("data-id");
+              currentIdeaRef = ref(db, `ideas/${userId}/${ideaId}`);
+              popupOverlay.classList.add("active");
+              popupForm.classList.add("active");
             });
+          }
+
+          ideasListDiv.appendChild(div);
+        });
+
+        renderPaginationControls(filteredIdeas.length);
+      }
+
+      function renderPaginationControls(total) {
+        paginationControls.innerHTML = "";
+        const pages = Math.ceil(total / ITEMS_PER_PAGE);
+        for (let i = 1; i <= pages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          if (i === currentPage) btn.disabled = true;
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            renderIdeas(allIdeas);
+          });
+          paginationControls.appendChild(btn);
         }
+      }
+
+      onValue(ideasRef, (snap) => {
+        if (snap.exists()) {
+          const ideasData = snap.val();
+          const combined = [];
+          for (const userKey in ideasData) {
+            for (const ideaKey in ideasData[userKey]) {
+              combined.push({
+                key: `${userKey}-${ideaKey}`,
+                userKey,
+                ideaKey,
+                data: ideasData[userKey][ideaKey],
+              });
+            }
+          }
+          allIdeas = combined;
+          renderIdeas(allIdeas);
+        } else {
+          ideasListDiv.innerHTML = "<p>No ideas available.</p>";
         }
-        allIdeas = combined;
-        renderIdeas(allIdeas);
-    } else {
-        ideasListDiv.innerHTML = '<p>No ideas available.</p>';
-    }
-    });
+      });
 
-    searchInput.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase();
-    const filtered = allIdeas.filter(({ data }) => data.title.toLowerCase().includes(q));
-    currentPage = 1;
-    renderIdeas(filtered);
-    });
+      searchInput.addEventListener("input", (e) => {
+        const q = e.target.value.toLowerCase();
+        const filtered = allIdeas.filter(({ data }) =>
+          data.title.toLowerCase().includes(q)
+        );
+        currentPage = 1;
+        renderIdeas(filtered);
+      });
 
-</script>
+      toggleBtn.addEventListener("click", () => {
+        dropdown.classList.toggle("show");
 
+        if (!userId) {
+          userNameElem.textContent = "Unknown User";
+          userEmailElem.textContent = investorEmail || "Unknown Email";
+          return;
+        }
 
-</body>
+        const userDetailsRef = ref(db, "investorUsers/" + userId);
+        get(userDetailsRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              userNameElem.textContent = data.username || "No Name";
+              userEmailElem.textContent = data.email || investorEmail;
+            } else {
+              userNameElem.textContent = "User not found";
+              userEmailElem.textContent = investorEmail || "Unknown Email";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching profile:", error);
+          });
+      });
+
+      window.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
 </html>

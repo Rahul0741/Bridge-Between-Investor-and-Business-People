@@ -1,74 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Business Queries</title>
-  <link rel="stylesheet" href="./businessqueries.css" />
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>Business Queries</h1>
-      <h2>Submit Your Query</h2>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Queries</title>
+    <link rel="stylesheet" href="./businessqueries.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Business Queries</h1>
+        <h2>Submit Your Query</h2>
+      </header>
 
-    <form id="queryForm">
-      <div class="form-group">
-        <label for="queryText">Your Query:</label>
-        <textarea id="queryText" placeholder="Enter your query" rows="4" required></textarea>
-      </div>
-      <button type="submit">Submit Query</button>
-    </form>
+      <form id="queryForm">
+        <div class="form-group">
+          <label for="queryText">Your Query:</label>
+          <textarea
+            id="queryText"
+            placeholder="Enter your query"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <button type="submit">Submit Query</button>
+      </form>
 
-    <section>
-      <h2>All Queries</h2>
-      <div id="queriesList" class="queries-container"></div>
-    </section>
-  </div>
+      <section>
+        <h2>All Queries</h2>
+        <div id="queriesList" class="queries-container"></div>
+      </section>
+    </div>
 
-  <script type="module">
-    // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    // import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-    // import { app, auth } from "./firebase-config.js";
+    <script type="module">
+      // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      // import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+      // import { app, auth } from "./firebase-config.js";
 
-    const db = getDatabase(app);
-    const urlParams = new URLSearchParams(window.location.search);
-    const ideaKey = urlParams.get('ideaKey');
+      const db = getDatabase(app);
+      const urlParams = new URLSearchParams(window.location.search);
+      const ideaKey = urlParams.get("ideaKey");
 
-    if (!ideaKey || typeof ideaKey !== "string") {
-      alert("Invalid ideaKey in URL!");
-      throw new Error("Invalid ideaKey.");
-    }
-
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        alert("You must be logged in.");
-        return;
+      if (!ideaKey || typeof ideaKey !== "string") {
+        alert("Invalid ideaKey in URL!");
+        throw new Error("Invalid ideaKey.");
       }
 
-      const userId = user.uid;
-      const queriesRef = ref(db, `queries/${userId}/${ideaKey}`);
-      const queriesListDiv = document.getElementById('queriesList');
-      const answerListeners = new Set();
-      const queries = new Map();
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          alert("You must be logged in.");
+          return;
+        }
 
-      // Render existing and new queries
-      onChildAdded(queriesRef, (snapshot) => {
-        const queryKey = snapshot.key;
-        const queryData = snapshot.val();
+        const userId = user.uid;
+        const queriesRef = ref(db, `queries/${userId}/${ideaKey}`);
+        const queriesListDiv = document.getElementById("queriesList");
+        const answerListeners = new Set();
+        const queries = new Map();
 
-        if (!queryData || !queryData.queryText || !queryData.timestamp) return;
+        // Render existing and new queries
+        onChildAdded(queriesRef, (snapshot) => {
+          const queryKey = snapshot.key;
+          const queryData = snapshot.val();
 
-        if (!queries.has(queryKey)) {
-            queries.set(queryKey, true);  // Mark this query as tracked
+          if (!queryData || !queryData.queryText || !queryData.timestamp)
+            return;
+
+          if (!queries.has(queryKey)) {
+            queries.set(queryKey, true); // Mark this query as tracked
 
             // Render the query
-            const queryDiv = document.createElement('div');
-            queryDiv.classList.add('query');
+            const queryDiv = document.createElement("div");
+            queryDiv.classList.add("query");
             queryDiv.innerHTML = `
             <p><strong>Query:</strong> ${queryData.queryText}</p>
-            <p><strong>Submitted On:</strong> ${new Date(queryData.timestamp).toLocaleString()}</p>
+            <p><strong>Submitted On:</strong> ${new Date(
+              queryData.timestamp
+            ).toLocaleString()}</p>
             <div class="answer-section" id="answer-section-${queryKey}">
                 <h3>Answers:</h3>
                 <div id="answersFor-${queryKey}"></div>
@@ -77,73 +85,83 @@
             queriesListDiv.appendChild(queryDiv);
 
             // Set up answer listener ONCE per query
-            const answersRef = ref(db, `queries/${userId}/${ideaKey}/${queryKey}/answers`);
+            const answersRef = ref(
+              db,
+              `queries/${userId}/${ideaKey}/${queryKey}/answers`
+            );
             onChildAdded(answersRef, (answerSnapshot) => {
-            const answerData = answerSnapshot.val();
-            if (!answerData || !answerData.response || !answerData.timestamp) return;
+              const answerData = answerSnapshot.val();
+              if (!answerData || !answerData.response || !answerData.timestamp)
+                return;
 
-            const answerDiv = document.createElement('div');
-            answerDiv.classList.add('answer');
-            answerDiv.innerHTML = `
+              const answerDiv = document.createElement("div");
+              answerDiv.classList.add("answer");
+              answerDiv.innerHTML = `
                 <p><strong>Response:</strong> ${answerData.response}</p>
-                <p><strong>Business Advisor:</strong> ${answerData.answeredByAdvisor || 'N/A'}</p>
-                <p><strong>Answered On:</strong> ${new Date(answerData.timestamp).toLocaleString()}</p>
+                <p><strong>Business Advisor:</strong> ${
+                  answerData.answeredByAdvisor || "N/A"
+                }</p>
+                <p><strong>Answered On:</strong> ${new Date(
+                  answerData.timestamp
+                ).toLocaleString()}</p>
             `;
-            const answersContainer = document.getElementById(`answersFor-${queryKey}`);
-            if (answersContainer) answersContainer.appendChild(answerDiv);
+              const answersContainer = document.getElementById(
+                `answersFor-${queryKey}`
+              );
+              if (answersContainer) answersContainer.appendChild(answerDiv);
             });
-        }
+          }
         });
 
-      // Submit handler
-      const queryForm = document.getElementById('queryForm');
-      queryForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const queryText = document.getElementById('queryText').value.trim();
+        // Submit handler
+        const queryForm = document.getElementById("queryForm");
+        queryForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const queryText = document.getElementById("queryText").value.trim();
 
-        if (!queryText) {
-          showAlert("Please enter a query before submitting.", "error");
-          return;
-        }
+          if (!queryText) {
+            showAlert("Please enter a query before submitting.", "error");
+            return;
+          }
 
-        const newQuery = {
-          queryText,
-          timestamp: Date.now(),
-        };
+          const newQuery = {
+            queryText,
+            timestamp: Date.now(),
+          };
 
-        try {
-          JSON.stringify(newQuery);
-        } catch (err) {
-          console.error("CIRCULAR DATA in query object!", err);
-          return;
-        }
+          try {
+            JSON.stringify(newQuery);
+          } catch (err) {
+            console.error("CIRCULAR DATA in query object!", err);
+            return;
+          }
 
-        console.log("Pushing query to:", queriesRef.toString());
-        console.log("Query Data:", newQuery);
+          console.log("Pushing query to:", queriesRef.toString());
+          console.log("Query Data:", newQuery);
 
-        try {
-          push(queriesRef, newQuery)
-            .then(() => {
-              showAlert("Query submitted successfully!", "success");
-              queryForm.reset();
-            })
-            .catch((error) => {
-              console.error("Error submitting query:", error);
-              showAlert("Error submitting query. Please try again!", "error");
-            });
-        } catch (err) {
-          console.error("Unexpected error during push:", err);
+          try {
+            push(queriesRef, newQuery)
+              .then(() => {
+                showAlert("Query submitted successfully!", "success");
+                queryForm.reset();
+              })
+              .catch((error) => {
+                console.error("Error submitting query:", error);
+                showAlert("Error submitting query. Please try again!", "error");
+              });
+          } catch (err) {
+            console.error("Unexpected error during push:", err);
+          }
+        });
+
+        function showAlert(message, type) {
+          const alert = document.createElement("div");
+          alert.classList.add("alert", type);
+          alert.textContent = message;
+          document.body.appendChild(alert);
+          setTimeout(() => alert.remove(), 3000);
         }
       });
-
-      function showAlert(message, type) {
-        const alert = document.createElement('div');
-        alert.classList.add('alert', type);
-        alert.textContent = message;
-        document.body.appendChild(alert);
-        setTimeout(() => alert.remove(), 3000);
-      }
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

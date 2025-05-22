@@ -129,6 +129,7 @@ textarea:focus {
         transform: translateY(-50%);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -180,10 +181,7 @@ textarea:focus {
 }
 
 .loader {
-  margin: 20px;
-  text-align: center;
-  font-weight: bold;
+    margin: 20px;
+    text-align: center;
+    font-weight: bold;
 }
-
-
-

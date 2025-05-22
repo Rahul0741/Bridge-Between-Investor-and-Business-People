@@ -1,133 +1,149 @@
 /* General Reset and Global Styling */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-    color: #fff;
-    line-height: 1.6;
-    padding: 20px;
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  line-height: 1.6;
+  padding: 20px;
 }
 
 /* Container for main content */
 .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
 }
 
 
-#heading{
-    text-align: start;
-    color: #fff;
+#heading {
+  text-align: start;
+  color: #fff;
 }
 
-.hero-text{
-    text-align: center;
+.hero-text {
+  text-align: center;
 }
+
 /* Header Styling */
 h2 {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 20px;
 }
 
 /* Form Styling */
 form {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 40px;
 }
 
 form div {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 label {
-    font-weight: bold;
-    margin-bottom: 10px;
-    display: block;
-    color: #444;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+  color: #444;
 }
 
 input[type="text"],
 input[type="number"],
 textarea,
 select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: #f5f5f5;
-    color: #333;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 button[type="submit"],
 button[type="button"] {
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 20px;
 }
 
 button[type="submit"]:hover,
 button[type="button"]:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 button[type="button"] {
-    background-color: #007bff;
+  background-color: #007bff;
 }
 
 button[type="button"]:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 
 /*approved button*/
 
 .approved-btn {
-    background-color: #4CAF50; /* Green background for approval */
-    color: white; /* White text color */
-    padding: 10px 20px; /* Comfortable padding */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: not-allowed; /* Indicates that the button is disabled */
-    font-size: 16px; /* Set a reasonable font size */
-    text-align: center; /* Center text inside the button */
-    width: 150px;
-    box-shadow: 0 4px 6px rgba(0, 128, 0, 0.3); /* Soft shadow for effect */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  background-color: #4CAF50;
+  /* Green background for approval */
+  color: white;
+  /* White text color */
+  padding: 10px 20px;
+  /* Comfortable padding */
+  border: none;
+  /* Remove border */
+  border-radius: 5px;
+  /* Rounded corners */
+  cursor: not-allowed;
+  /* Indicates that the button is disabled */
+  font-size: 16px;
+  /* Set a reasonable font size */
+  text-align: center;
+  /* Center text inside the button */
+  width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 128, 0, 0.3);
+  /* Soft shadow for effect */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  /* Smooth transition */
 }
 
 .approved-btn:disabled {
-    background-color: #8BC34A; /* Lighter green when disabled */
-    cursor: not-allowed; /* Change cursor to indicate non-interactive state */
-    box-shadow: none; /* Remove shadow when disabled */
-    opacity: 0.7; /* Add opacity for a "disabled" feel */
+  background-color: #8BC34A;
+  /* Lighter green when disabled */
+  cursor: not-allowed;
+  /* Change cursor to indicate non-interactive state */
+  box-shadow: none;
+  /* Remove shadow when disabled */
+  opacity: 0.7;
+  /* Add opacity for a "disabled" feel */
 }
 
 /* Ideas Section */
 .idea-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Exactly 3 columns */
+  grid-template-columns: repeat(3, 1fr);
+  /* Exactly 3 columns */
   gap: 24px;
   padding: 20px;
   margin: 0 40px;
@@ -135,174 +151,175 @@ button[type="button"]:hover {
 
 
 .idea {
-    background-color: whitesmoke;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 20px;
-    width: 80%;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: black;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  width: 80%;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: black;
 }
 
 .idea:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 h3 {
-    color: #007bff;
-    margin-bottom: 10px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 p {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 button.accept-btn,
 button.reject-btn,
 button.queries-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
 }
 
 button.accept-btn {
-    background-color: #16ad39;
-    color: white;
+  background-color: #16ad39;
+  color: white;
 }
 
 button.accept-btn:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 button.reject-btn {
-    background-color: #c80d20;
-    color: white;
+  background-color: #c80d20;
+  color: white;
 }
 
 button.reject-btn:hover {
-    background-color: #c82333;
+  background-color: #c82333;
 }
 
 button.queries-btn {
-    background-color: #ffc107;
-    color: white;
+  background-color: #ffc107;
+  color: white;
 }
 
 button.queries-btn:hover {
-    background-color: #e0a800;
+  background-color: #e0a800;
 }
 
 /* Responsive Layout */
 @media (max-width: 768px) {
-    .idea-container {
-        flex-direction: column;
-    }
+  .idea-container {
+    flex-direction: column;
+  }
 
-    .idea {
-        width: 100%;
-    }
+  .idea {
+    width: 100%;
+  }
 }
 
 /* Alert Styling */
 .alert {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff9800;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 5px;
-    font-size: 18px;
-    display: none;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.5s ease;
-    z-index: 999;
-    text-align: center;
-    width: 80%;
-    max-width: 500px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff9800;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 18px;
+  display: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.5s ease;
+  z-index: 999;
+  text-align: center;
+  width: 80%;
+  max-width: 500px;
 }
 
 .alert.show {
-    display: block;
-    opacity: 1;
+  display: block;
+  opacity: 1;
 }
 
 .alert.success {
-    background-color: #4CAF50;
+  background-color: #4CAF50;
 }
 
 .alert.error {
-    background-color: #f44336;
+  background-color: #f44336;
 }
 
 .alert-info {
-    background-color: #2196F3;
+  background-color: #2196F3;
 }
 
 /* Adding some spacing and making elements look attractive */
 input, textarea, select {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 button[type="submit"], button[type="button"] {
-    padding: 12px 25px;
-    border-radius: 5px;
+  padding: 12px 25px;
+  border-radius: 5px;
 }
 
 /* Making header and section text more prominent */
 h1 {
-    font-size: 3rem;
-    color: #fff;
-    font-weight: bold;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 h2 {
-    font-size: 2rem;
-    color: #fff;
+  font-size: 2rem;
+  color: #fff;
 }
 
 /* Form input border styles for better focus visibility */
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: #aaa;
+  color: #aaa;
 }
 
 /* Ensure that no functions are broken and layout works across screen sizes */
 @media (max-width: 768px) {
-    form {
-        padding: 15px;
-    }
+  form {
+    padding: 15px;
+  }
 
-    h1 {
-        font-size: 2.5rem;
-    }
+  h1 {
+    font-size: 2.5rem;
+  }
 
-    h2 {
-        font-size: 1.8rem;
-    }
+  h2 {
+    font-size: 1.8rem;
+  }
 }
 
 #postIdeaForm {
-    max-width: 800px;
-    margin: 0 auto; 
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-#viewLoansButton{
-    margin-top: 20px;
+#viewLoansButton {
+  margin-top: 20px;
 }
+
 .site-header {
   padding: 20px 5%;
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
@@ -399,7 +416,8 @@ textarea::placeholder {
 
 .profile-header {
   text-align: center;
-  padding: 16px 12px 10px; /* removed bottom padding */
+  padding: 16px 12px 10px;
+  /* removed bottom padding */
   border-bottom: none;
   margin-bottom: 0;
 }
@@ -438,7 +456,8 @@ textarea::placeholder {
   border: none;
   padding: 8px 16px;
   margin-top: 8px;
-  margin-bottom: 0; /* ensure no extra space below */
+  margin-bottom: 0;
+  /* ensure no extra space below */
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
@@ -449,7 +468,8 @@ textarea::placeholder {
   flex-direction: column;
   background-color: #f9f9f9;
   color: #000;
-  margin-bottom: 0; /* removes any top margin */
+  margin-bottom: 0;
+  /* removes any top margin */
   padding-top: 0;
 }
 
@@ -467,7 +487,8 @@ textarea::placeholder {
 }
 
 .profile-options button:first-child {
-  border-top: 1px solid #ddd; /* Add divider explicitly for top button */
+  border-top: 1px solid #ddd;
+  /* Add divider explicitly for top button */
 }
 
 .profile-options button:hover {
@@ -538,45 +559,48 @@ footer {
   color: #ffffff;
 }
 
-  .search-pagination-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1em 40px;
-    flex-wrap: wrap;
-  }
+.search-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 40px;
+  flex-wrap: wrap;
+}
 
-  #searchBox {
-    padding: 6px;
-    width: 200px;
-    margin-left: 20px;
-  }
-  #paginationControls button {
-    margin: 0 4px;
-    padding: 5px 10px;
-  }
-  #collapseIdeasBtn {
-    padding: 8px 16px;
-    background-color: #eee;
-    color: black;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    display: inline-block;
-    margin-right: 150px;
-  }
+#searchBox {
+  padding: 6px;
+  width: 200px;
+  margin-left: 20px;
+}
 
-    .loader {
-      text-align: center;
-      font-weight: bold;
-      padding: 1em;
-      color: #555;
-    }
-    .accept-btn:disabled, .reject-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    
-    #allIdeasContainer {
-      transition: all 0.5s ease;
-    }
+#paginationControls button {
+  margin: 0 4px;
+  padding: 5px 10px;
+}
+
+#collapseIdeasBtn {
+  padding: 8px 16px;
+  background-color: #eee;
+  color: black;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 150px;
+}
+
+.loader {
+  text-align: center;
+  font-weight: bold;
+  padding: 1em;
+  color: #555;
+}
+
+.accept-btn:disabled, .reject-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#allIdeasContainer {
+  transition: all 0.5s ease;
+}

@@ -24,7 +24,8 @@ h1 {
 /* Loan Container */
 .loan-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* This ensures 3 items per row */
+    grid-template-columns: repeat(3, 1fr);
+    /* This ensures 3 items per row */
     gap: 20px;
     justify-items: center;
     margin-top: 40px;
@@ -189,6 +190,7 @@ h1 {
         opacity: 0;
         transform: translateX(-50%) translateY(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
@@ -198,13 +200,15 @@ h1 {
 /* Responsive Styles */
 @media screen and (max-width: 1024px) {
     .loan-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 cards per row on tablets */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 cards per row on tablets */
     }
 }
 
 @media screen and (max-width: 768px) {
     .loan-container {
-        grid-template-columns: 1fr; /* 1 card per row on smaller screens */
+        grid-template-columns: 1fr;
+        /* 1 card per row on smaller screens */
     }
 
     .loan {
