@@ -301,11 +301,15 @@
             console.error("Error fetching profile:", error);
           });
       });
+        document.querySelector(".edit-btn").addEventListener("click", () => {
+  window.location.href = "EditProfile.html";
+});
 
       window.addEventListener("click", (e) => {
         if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
           dropdown.classList.remove("show");
         }
+
       });
     </script>
   </body>

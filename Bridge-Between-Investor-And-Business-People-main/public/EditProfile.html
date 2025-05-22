@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
+  <link rel="stylesheet" href="EditProfile.css" />
+</head>
+<body>
+  <div class="edit-profile-container">
+    <h2>Edit Profile</h2>
+
+    <div class="form-group">
+      <label for="username">Name</label>
+      <input type="text" id="username" placeholder="Enter your name" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" placeholder="Enter your phone number" />
+    </div>
+
+    <button type="submit" onclick="updateProfile()">Save Changes</button>
+  </div>
+
+  <script type="module">
+    import { auth, db } from './firebase-config.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    import { ref, get, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+    // Prefill form with user data
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        const userRef = ref(db, 'users/' + uid);
+        get(userRef).then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            console.log(data);
+            document.getElementById("username").value = data.username || "";
+            document.getElementById("email").value = data.email || "";
+            document.getElementById("phone").value = data.phone || "";
+          }
+        });
+      }
+    });
+
+    // Update profile function
+    window.updateProfile = function () {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const uid = user.uid;
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+
+      const updates = {
+        username: username,
+        email: email,
+        phone: phone
+      };
+      console.log(updates)
+      update(ref(db, 'users/' + uid), updates)
+        .then(() => {
+          alert("Details have been updated.");
+          window.history.back(); // Go back after alert is dismissed
+        })
+        .catch((error) => {
+          alert("Error updating profile: " + error.message);
+        });
+    }
+  </script>
+</body>
+</html>
