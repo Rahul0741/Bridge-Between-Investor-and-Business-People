@@ -638,7 +638,7 @@ footer {
   top: 50%;
   left: 50%;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   transform: translate(-50%, -50%);
   background-color: white;
   color: black;
@@ -648,6 +648,11 @@ footer {
   z-index: 999;
   display: none;
   flex-direction: column;
+}
+#submitQueryBtn{
+  width: 200px;
+  background-color: #16ad39;
+  margin-left: 30%;
 }
 
 .query-popup.active {
