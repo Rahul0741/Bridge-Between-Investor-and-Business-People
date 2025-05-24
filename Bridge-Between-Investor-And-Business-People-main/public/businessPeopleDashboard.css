@@ -159,6 +159,9 @@ button[type="button"]:hover {
   margin-bottom: 30px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: black;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
 .idea:hover {
@@ -707,7 +710,6 @@ footer {
   border-radius: 6px;
   margin-bottom: 10px;
 }
-
 .answer p {
   margin: 4px 0;
   font-size: 14px;
@@ -715,4 +717,4 @@ footer {
 
 #allIdeasContainer {
   transition: all 0.5s ease;
-}
+} 
