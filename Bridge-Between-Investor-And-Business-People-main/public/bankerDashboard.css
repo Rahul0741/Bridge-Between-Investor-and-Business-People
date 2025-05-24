@@ -228,3 +228,155 @@ form button:hover {
     font-size: 0.9em;
   }
 }
+
+.site-header {
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  padding: 20px 8%;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: #ffffff;
+}
+
+.header-inner h1 {
+  font-size: 1.6rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.profile-icon {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 8%;
+  background-color: #ffffff;
+  color: #333;
+  width: 260px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.profile-dropdown.show {
+  display: flex;
+}
+
+.profile-header {
+  padding: 20px;
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #302b63;
+}
+
+.profile-header h3 {
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-header p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.edit-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #218838;
+}
+
+.profile-options {
+  padding: 10px 20px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.profile-options button {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.profile-options button:hover {
+  color: #302b63;
+}
+
+/* Optional: Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .header-inner h1 {
+    font-size: 1.4rem;
+  }
+
+  .profile-dropdown {
+    right: 5%;
+    width: 90%;
+  }
+}
