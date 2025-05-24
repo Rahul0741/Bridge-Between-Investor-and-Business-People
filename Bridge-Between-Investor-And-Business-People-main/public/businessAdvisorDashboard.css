@@ -186,3 +186,65 @@ textarea:focus {
     text-align: center;
     font-weight: bold;
 }
+/* Footer Styling */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 50px 8%;
+  background: #0f0c29;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  flex: 1;
+  min-width: 300px;
+}
+
+.footer-image {
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  object-fit: cover;
+}
+
+.footer-content h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: #ffffff;
+  font-size: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #6d44b8;
+}
+
+.footer-right {
+  flex: 1;
+  min-width: 280px;
+  color: #ccc;
+}
+
+.footer-right p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.footer-right strong {
+  color: #ffffff;
+}
