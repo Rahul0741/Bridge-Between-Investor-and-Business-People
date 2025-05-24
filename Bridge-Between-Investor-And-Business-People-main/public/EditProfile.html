@@ -7,7 +7,14 @@
   <link rel="stylesheet" href="EditProfile.css" />
 </head>
 <body>
-  <div class="edit-profile-container">
+
+  <div class="blob3"></div>
+
+  <!-- Loading spinner shown while profile data loads -->
+  <div id="loading" class="loading-spinner">Loading profile...</div>
+
+  <!-- Form container hidden initially until data loads -->
+  <div class="edit-profile-container" style="display:none;">
     <h2>Edit Profile</h2>
 
     <div class="form-group">
@@ -25,7 +32,11 @@
       <input type="text" id="phone" placeholder="Enter your phone number" />
     </div>
 
-    <button type="submit" onclick="updateProfile()">Save Changes</button>
+    <div class="button-group">
+      <button type="submit" onclick="updateProfile()">Save Changes</button>
+      <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+    </div>
+
   </div>
 
   <script type="module">
@@ -33,48 +44,87 @@
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
     import { ref, get, update } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-    // Prefill form with user data
+    // Prefill form with user data and manage loading spinner visibility
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         const userRef = ref(db, 'users/' + uid);
+
+        // Show loading spinner, hide form
+        document.getElementById("loading").style.display = "block";
+        document.querySelector(".edit-profile-container").style.display = "none";
+
         get(userRef).then((snapshot) => {
+          // Hide loading spinner, show form
+          document.getElementById("loading").style.display = "none";
+          document.querySelector(".edit-profile-container").style.display = "block";
+
           if (snapshot.exists()) {
             const data = snapshot.val();
-            console.log(data);
             document.getElementById("username").value = data.username || "";
             document.getElementById("email").value = data.email || "";
             document.getElementById("phone").value = data.phone || "";
           }
+        }).catch((error) => {
+          document.getElementById("loading").style.display = "none";
+          showToast("Error loading profile: " + error.message);
+          document.querySelector(".edit-profile-container").style.display = "block";
         });
+      } else {
+        // No user logged in - hide spinner and show form anyway
+        document.getElementById("loading").style.display = "none";
+        document.querySelector(".edit-profile-container").style.display = "block";
       }
     });
+    function showNotification(message, type = 'success', autoHide = false, redirectBack = false) {
+  const existing = document.querySelector('.notification-banner');
+  if (existing) existing.remove();
 
-    // Update profile function
+  const banner = document.createElement("div");
+  banner.className = `notification-banner ${type}`;
+  banner.textContent = message;
+  document.body.appendChild(banner);
+
+  if (autoHide) {
+    setTimeout(() => {
+      banner.remove();
+      if (redirectBack) window.history.back();
+    }, 3000);
+  }
+}
+
+    // Update profile function with validation
     window.updateProfile = function () {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+
+      // Validation: check for empty fields
+      if (!username || !email || !phone) {
+        showNotification("Please fill out all the details.", "error", true);
+        return;
+      }
+
       const user = auth.currentUser;
       if (!user) return;
 
       const uid = user.uid;
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
-
       const updates = {
         username: username,
         email: email,
         phone: phone
       };
-      console.log(updates)
+
       update(ref(db, 'users/' + uid), updates)
         .then(() => {
-          alert("Details have been updated.");
-          window.history.back(); // Go back after alert is dismissed
+          // Show a top message and auto-redirect
+          showNotification("Details have been updated successfully!", "success", true, true);
         })
         .catch((error) => {
-          alert("Error updating profile: " + error.message);
+          showNotification("Error: " + error.message, "error", true);
         });
-    }
+    };
   </script>
+  <div class="blob3"></div>
 </body>
 </html>

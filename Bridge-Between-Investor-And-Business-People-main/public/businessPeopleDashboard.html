@@ -27,15 +27,9 @@
         <a href="EditProfile.html" class="edit-btn">Edit Profile</a>
       </div>
       <div class="profile-options">
-        <button id="viewLoansButton" style="color: black;">
-          <i class="bi bi-cash-coin"></i> View Loans
-        </button>
-        <button id="showAllIdeas" style="color: black;">
-          <i class="bi bi-lightbulb"></i> Ideas Posted
-        </button>
-        <button id="logoutBtn">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
+        <button id="viewLoansButton"><i class="bi bi-cash-coin"></i> View Loans</button>
+        <button id="showAllIdeas"><i class="bi bi-lightbulb"></i> Ideas Posted</button>
+        <button id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
       </div>
     </div>
   </header>
@@ -76,8 +70,8 @@
   </div>
 
   <!-- Query Form Popup -->
-  <div class="overlay" id="queryOverlay"></div>
-  <div class="popup" id="queryPopup">
+  <div class="query-popup-overlay" id="queryOverlay"></div>
+  <div class="query-popup" id="queryPopup">
     <span class="close-btn" id="closeQueryPopup">&times;</span>
     <h3>Submit a Query</h3>
     <textarea id="queryTextPopup" rows="4" placeholder="Type your query..."></textarea>
@@ -106,7 +100,6 @@
 
 
     <script type="module">
-      // businessPeopleDashboard.js
       import { db, auth } from './firebase-config.js';
       import {
         ref,
@@ -116,6 +109,14 @@
         get,
         onChildAdded
       } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js';
+      import { signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          localStorage.clear();
+          window.location.href = './login.html';
+        }
+      });
 
       const businessUid = localStorage.getItem('uid');
       const businessEmail = localStorage.getItem('email');
@@ -203,9 +204,11 @@
       function renderIdeas(ideas, container, withPagination) {
         container.innerHTML = '';
         const paginated = withPagination ? ideas.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE) : ideas;
+
         paginated.forEach(({ key, data }) => {
           const ideaDiv = document.createElement('div');
           ideaDiv.classList.add('idea');
+
           let actionHTML = '';
           if (data.status === 'Accepted') {
             actionHTML = `<p><strong>Investor Email:</strong> ${data.acceptedBy}</p>
@@ -255,10 +258,10 @@
                   break;
                 }
               }
-              countEl.textContent = `Queries posted: ${queryCount}`;
+              countEl.innerHTML = `<strong>Queries posted:</strong> ${queryCount}`;
               if (advisorResponded) {
                 const badge = document.createElement('span');
-                badge.textContent = ' 🔔 Advisor replied';
+                badge.textContent = ' "an Advisor replied"';
                 badge.style.color = 'green';
                 countEl.appendChild(badge);
               }
@@ -268,10 +271,81 @@
           });
 
           ideaDiv.querySelector('.queries-btn').addEventListener('click', () => {
-            selectedIdeaKey = key;
-            overlay.classList.add('active');
-            popup.classList.add('active');
+          selectedIdeaKey = key;
+          overlay.classList.add('active');
+          popup.classList.add('active');
+
+          const queryRef = ref(db, `queries/${businessUid}/${selectedIdeaKey}`);
+          queryTextPopup.value = ''; // Clear input
+          popup.innerHTML = `
+            <span class="close-btn" id="closeQueryPopup">&times;</span>
+            <h3>Submit a Query</h3>
+            <textarea id="queryTextPopup" rows="4" placeholder="Type your query..."></textarea>
+            <button id="submitQueryBtn">Submit Query</button>
+            <div class="answers-list" id="submittedQueries"></div>
+          `;
+
+          // Load submitted queries with answers
+          onValue(queryRef, (snapshot) => {
+            const submittedQueriesDiv = document.getElementById('submittedQueries');
+            submittedQueriesDiv.innerHTML = '';
+            if (snapshot.exists()) {
+              const queries = snapshot.val();
+              Object.entries(queries).forEach(([qid, queryData]) => {
+                const queryBlock = document.createElement('div');
+                queryBlock.classList.add('answer');
+                queryBlock.innerHTML = `
+                  <p><strong>Query:</strong> ${queryData.question}</p>
+                  <p><strong>Asked On:</strong> ${new Date(queryData.timestamp).toLocaleString()}</p>
+                `;
+
+                if (queryData.answers) {
+                  Object.values(queryData.answers).forEach((ans) => {
+                    queryBlock.innerHTML += `
+                      <p><strong>Answer:</strong> ${ans.response}</p>
+                      <p><strong>Answered by:</strong> ${ans.answeredByAdvisor}</em></p>
+                      <p><strong>At: </strong>${new Date(ans.timestamp).toLocaleString()}</em></p>
+                    `;
+                  });
+                } else {
+                  queryBlock.innerHTML += `<p><em>No answer yet</em></p>`;
+                }
+
+                submittedQueriesDiv.appendChild(queryBlock);
+              });
+            } else {
+              submittedQueriesDiv.innerHTML = `<p><em>No queries submitted yet.</em></p>`;
+            }
           });
+
+          // Bind close and submit events again after popup HTML overwrite
+          document.getElementById('closeQueryPopup').addEventListener('click', () => {
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+            selectedIdeaKey = null;
+          });
+
+          document.getElementById('submitQueryBtn').addEventListener('click', () => {
+            const question = document.getElementById('queryTextPopup').value.trim();
+            if (!question) return alert('Enter your query.');
+
+            const newQuery = {
+              question,
+              timestamp: Date.now(),
+            };
+
+            push(ref(db, `queries/${businessUid}/${selectedIdeaKey}`), newQuery)
+              .then(() => {
+                alert('Query submitted!');
+                document.getElementById('queryTextPopup').value = '';
+              })
+              .catch((err) => {
+                console.error('Failed to submit query', err);
+                alert('Failed to submit query.');
+              });
+          });
+        });
+
 
           const acceptBtn = ideaDiv.querySelector('.accept-btn');
           const rejectBtn = ideaDiv.querySelector('.reject-btn');
@@ -292,6 +366,7 @@
             });
           }
         });
+
         if (withPagination) renderPaginationControls(ideas.length);
       }
 
@@ -319,8 +394,13 @@
       });
 
       document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.clear();
-        window.location.href = './login.html';
+        signOut(auth).then(() => {
+          localStorage.clear();
+          window.location.href = './index.html';
+        }).catch((error) => {
+          console.error("Logout failed:", error);
+          alert("Error logging out. Try again.");
+        });
       });
 
       document.getElementById('viewLoansButton').addEventListener('click', () => {
@@ -377,7 +457,8 @@
           console.error(err);
         });
       });
+      
+    </script
 
-    </script>
   </body>
 </html>

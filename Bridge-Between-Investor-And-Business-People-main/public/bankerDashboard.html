@@ -10,6 +10,7 @@
       import { app, db, auth } from "./firebase-config.js";
 
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+      import { signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
       import {
         getDatabase,
         ref,
@@ -19,11 +20,28 @@
         remove,
       } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
 
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          localStorage.clear();
+          window.location.href = './login.html';
+        }
+      });
+
+
       function sanitizeEmail(email) {
         return email.replace(/@/g, "_at_").replace(/\./g, "_dot_");
       }
 
       // Firebase initialization and helper functions (unchanged).
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        signOut(auth).then(() => {
+          localStorage.clear();
+          window.location.href = './index.html';
+        }).catch((error) => {
+          console.error("Logout failed:", error);
+          alert("Error logging out. Try again.");
+        });
+      });
 
       document.addEventListener("DOMContentLoaded", () => {
         const loanForm = document.getElementById("loanForm");
