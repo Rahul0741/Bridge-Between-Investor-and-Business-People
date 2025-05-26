@@ -8,6 +8,7 @@ body {
   font-family: 'Jost', sans-serif;
   background: #0f0c29;
   color: white;
+  scroll-behavior: smooth;
 }
 
 /* Header/Nav */
@@ -21,6 +22,7 @@ header {
   align-items: center;
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
 }
 
 .logo {
@@ -72,6 +74,11 @@ nav ul li a:hover {
 .hero-image img {
   width: 450px;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.05);
 }
 
 .btn {
@@ -81,11 +88,12 @@ nav ul li a:hover {
   text-decoration: none;
   border-radius: 30px;
   font-size: 1rem;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
   background: #573b8a;
+  transform: translateY(-3px);
 }
 
 /* Future Section */
@@ -94,11 +102,17 @@ nav ul li a:hover {
   flex-direction: row-reverse;
   align-items: center;
   padding: 80px 10%;
+  gap: 30px;
 }
 
 .future-image img {
   width: 650px;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.future-image img:hover {
+  transform: scale(1.03);
 }
 
 .future-text {
@@ -137,11 +151,13 @@ nav ul li a:hover {
   padding: 20px;
   border-radius: 10px;
   width: 250px;
-  transition: 0.3s;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
 }
 
 .card:hover {
   background: #302b63;
+  transform: translateY(-10px);
 }
 
 .card img {
@@ -177,10 +193,13 @@ p {
 .more-cards .card {
   background: #1d1a39;
   color: #f4f4f4;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
 }
 
 .more-cards .card:hover {
   background: #302b63;
+  transform: translateY(-10px);
 }
 
 /* Footer */
