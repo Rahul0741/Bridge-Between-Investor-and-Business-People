@@ -22,12 +22,14 @@ h3 {
 
 /* Container for Ideas and Queries */
 .idea-container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 20px auto;
     padding: 15px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 50px;
+    display: flex;
+    align-content: flex-start;
 }
 
 .idea, .query {
