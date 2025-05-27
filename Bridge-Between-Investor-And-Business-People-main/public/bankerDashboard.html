@@ -23,6 +23,7 @@
 
       import { signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
+      const dropdown = document.getElementById("profileDropdown");
       // Check auth state and redirect if not logged in
       auth.onAuthStateChanged((user) => {
         if (!user) {
@@ -214,6 +215,44 @@
 
           loadLoans();
         });
+      });
+      
+      toggleBtn.addEventListener("click", () => {
+        dropdown.classList.toggle("show");
+
+        if (!userId) {
+          userNameElem.textContent = "Unknown User";
+          userEmailElem.textContent = investorEmail || "Unknown Email";
+          return;
+        }
+
+        // Changed the reference path here from 'investorUsers' to 'users'
+        const userDetailsRef = ref(db, "users/" + userId);
+        get(userDetailsRef)
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              userNameElem.textContent =
+                data.username || data.name || "No Name";
+              userEmailElem.textContent = data.email || investorEmail;
+            } else {
+              userNameElem.textContent = "User not found";
+              userEmailElem.textContent = investorEmail || "Unknown Email";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching profile:", error);
+          });
+      });
+        document.querySelector(".edit-btn").addEventListener("click", () => {
+  window.location.href = "EditProfile.html";
+});
+
+      window.addEventListener("click", (e) => {
+        if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.remove("show");
+        }
+
       });
     </script>
   </head>
