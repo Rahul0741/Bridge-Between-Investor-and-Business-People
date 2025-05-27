@@ -32,17 +32,15 @@
       });
 
       // Logout button handler
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        signOut(auth)
-          .then(() => {
-            localStorage.clear();
-            window.location.href = "./index.html";
-          })
-          .catch((error) => {
-            console.error("Logout failed:", error);
-            alert("Error logging out. Try again.");
-          });
+         document.getElementById('logoutBtn').addEventListener('click', () => {
+      signOut(auth).then(() => {
+        localStorage.clear();
+        window.location.href = './index.html';
+      }).catch((error) => {
+        console.error("Logout failed:", error);
+        alert("Error logging out. Try again.");
       });
+    });
 
       document.addEventListener("DOMContentLoaded", () => {
         const loanForm = document.getElementById("loanForm");
@@ -249,6 +247,7 @@
         <button id="logoutBtn">
           <i class="bi bi-box-arrow-right"></i> Logout
         </button>
+       
       </div>
     </div>
   </header>
