@@ -14,17 +14,21 @@
       import { app, db, auth } from "./firebase-config.js";
 
       import {
-        ref,  
+        ref,
         push,
         update,
         onValue,
         remove,
+        get
       } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
       import { signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
       const dropdown = document.getElementById("profileDropdown");
-      // Check auth state and redirect if not logged in
+      const toggleBtn = document.getElementById("profileToggle");
+      const userNameElem = document.getElementById("userName");
+      const userEmailElem = document.getElementById("userEmail");
+
       auth.onAuthStateChanged((user) => {
         if (!user) {
           localStorage.clear();
@@ -32,44 +36,39 @@
         }
       });
 
-      // Logout button handler
-         document.getElementById('logoutBtn').addEventListener('click', () => {
-      signOut(auth).then(() => {
-        localStorage.clear();
-        window.location.href = './index.html';
-      }).catch((error) => {
-        console.error("Logout failed:", error);
-        alert("Error logging out. Try again.");
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            localStorage.clear();
+            window.location.href = "./index.html";
+          })
+          .catch((error) => {
+            console.error("Logout failed:", error);
+            alert("Error logging out. Try again.");
+          });
       });
-    });
 
       document.addEventListener("DOMContentLoaded", () => {
         const loanForm = document.getElementById("loanForm");
         const loanList = document.getElementById("loanList");
 
+        let defaultSubmitHandler;
+
         auth.onAuthStateChanged((user) => {
-          if (!user) {
-            return; // auth state already handled above
-          }
+          if (!user) return;
 
           const userUid = user.uid;
           const email = user.email;
 
-          loanForm.addEventListener("submit", async (e) => {
+          defaultSubmitHandler = async (e) => {
             e.preventDefault();
 
             const loanData = {
               loanType: document.getElementById("loanType").value,
-              interestRate: parseFloat(
-                document.getElementById("interestRate").value
-              ),
+              interestRate: parseFloat(document.getElementById("interestRate").value),
               loanTenure: parseInt(document.getElementById("loanTenure").value),
-              loanAmountRange: document
-                .getElementById("loanAmountRange")
-                .value.trim(),
-              eligibilityCriteria: document
-                .getElementById("eligibilityCriteria")
-                .value.trim(),
+              loanAmountRange: document.getElementById("loanAmountRange").value.trim(),
+              eligibilityCriteria: document.getElementById("eligibilityCriteria").value.trim(),
               contactInfo: document.getElementById("contactInfo").value.trim(),
               email: email,
             };
@@ -82,9 +81,10 @@
               console.error("Error adding loan details:", error);
               alert("Failed to add loan details. Try again.");
             }
-          });
+          };
 
-          // Render single loan item with applicants table
+          loanForm.onsubmit = defaultSubmitHandler;
+
           function renderLoanItem(key, loan) {
             const loanItem = document.createElement("div");
             loanItem.style.border = "1px solid #ccc";
@@ -92,36 +92,38 @@
             loanItem.style.padding = "10px";
 
             loanItem.innerHTML = `
-          <p><strong>Loan Type:</strong> ${loan.loanType}</p>
-          <p><strong>Interest Rate:</strong> ${loan.interestRate}%</p>
-          <p><strong>Loan Tenure:</strong> ${loan.loanTenure} months</p>
-          <p><strong>Amount Range:</strong> ${loan.loanAmountRange}</p>
-          <p><strong>Eligibility:</strong> ${loan.eligibilityCriteria}</p>
-          <p><strong>Contact:</strong> ${loan.contactInfo}</p>
-          <p><strong>Banker Email:</strong> ${loan.email}</p>
+              <p><strong>Loan Type:</strong> ${loan.loanType}</p>
+              <p><strong>Interest Rate:</strong> ${loan.interestRate}%</p>
+              <p><strong>Loan Tenure:</strong> ${loan.loanTenure} months</p>
+              <p><strong>Amount Range:</strong> ${loan.loanAmountRange}</p>
+              <p><strong>Eligibility:</strong> ${loan.eligibilityCriteria}</p>
+              <p><strong>Contact:</strong> ${loan.contactInfo}</p>
+              <p><strong>Banker Email:</strong> ${loan.email}</p>
 
-          <div id="applicants-${key}">
-            <h4>Applicants:</h4>
-            <table border="1" style="width: 100%; text-align: left;">
-              <thead>
-                <tr>
-                  <th>Email</th>
-                  <th>Loan Amount</th>
-                  <th>Annual Income</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        `;
+              <button onclick="editLoan('${key}', ${JSON.stringify(loan).replace(/"/g, '&quot;')})">Edit</button>
+              <button onclick="deleteLoan('${key}')">Delete</button>
+
+              <div id="applicants-${key}">
+                <h4>Applicants:</h4>
+                <table border="1" style="width: 100%; text-align: left;">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Loan Amount</th>
+                      <th>Annual Income</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            `;
 
             loanList.appendChild(loanItem);
             loadApplicants(key);
           }
 
-          // Load loans from DB for current user
           function loadLoans() {
             onValue(ref(db, `loans/${userUid}`), (snapshot) => {
               loanList.innerHTML = "<h2>Posted Loans</h2>";
@@ -137,185 +139,152 @@
             });
           }
 
-          // Load applicants for a particular loan
           function loadApplicants(loanKey) {
-            const applicantsRef = ref(
-              db,
-              `loans/${userUid}/${loanKey}/applicants`
-            );
+            const applicantsRef = ref(db, `loans/${userUid}/${loanKey}/applicants`);
             onValue(applicantsRef, (snapshot) => {
-              const applicantsTableBody = document.querySelector(
-                `#applicants-${loanKey} tbody`
-              );
-              applicantsTableBody.innerHTML = ""; // Clear previous rows
+              const applicantsTableBody = document.querySelector(`#applicants-${loanKey} tbody`);
+              applicantsTableBody.innerHTML = "";
 
               if (!snapshot.exists()) {
-                applicantsTableBody.innerHTML =
-                  "<tr><td colspan='5'>No applicants yet.</td></tr>";
+                applicantsTableBody.innerHTML = "<tr><td colspan='5'>No applicants yet.</td></tr>";
                 return;
               }
 
               snapshot.forEach((childSnapshot) => {
                 const applicant = childSnapshot.val();
-
-                // Skip if status is approved or rejected
-                if (
-                  applicant.status === "approved" ||
-                  applicant.status === "rejected"
-                ) {
-                  return;
-                }
+                if (applicant.status === "approved" || applicant.status === "rejected") return;
 
                 const row = document.createElement("tr");
                 row.id = `applicant-${loanKey}-${childSnapshot.key}`;
                 row.innerHTML = `
-              <td>${applicant.email}</td>
-              <td>${applicant.loanAmount}</td>
-              <td>${applicant.annualIncome}</td>
-              <td>${applicant.status || "under_progress"}</td>
-              <td>
-                <button onclick="reactToApplicant('${loanKey}', '${
-                  childSnapshot.key
-                }', 'approved')">Accept</button>
-                <button onclick="reactToApplicant('${loanKey}', '${
-                  childSnapshot.key
-                }', 'rejected')">Reject</button>
-              </td>
-            `;
+                  <td>${applicant.email}</td>
+                  <td>${applicant.loanAmount}</td>
+                  <td>${applicant.annualIncome}</td>
+                  <td>${applicant.status || "under_progress"}</td>
+                  <td>
+                    <button onclick="reactToApplicant('${loanKey}', '${childSnapshot.key}', 'approved')">Accept</button>
+                    <button onclick="reactToApplicant('${loanKey}', '${childSnapshot.key}', 'rejected')">Reject</button>
+                  </td>
+                `;
                 applicantsTableBody.appendChild(row);
               });
             });
           }
 
-          // React to applicant action: accept or reject
           window.reactToApplicant = async (loanKey, applicantKey, status) => {
-            const applicantRef = ref(
-              db,
-              `loans/${userUid}/${loanKey}/applicants/${applicantKey}`
-            );
-
+            const applicantRef = ref(db, `loans/${userUid}/${loanKey}/applicants/${applicantKey}`);
             try {
               await update(applicantRef, { status });
-              removeApplicantRow(loanKey, applicantKey);
+              document.getElementById(`applicant-${loanKey}-${applicantKey}`).remove();
             } catch (error) {
               console.error("Error updating applicant status:", error);
               alert("Failed to update status. Try again.");
             }
           };
 
-          // Remove applicant row from DOM after status update
-          function removeApplicantRow(loanKey, applicantKey) {
-            const row = document.getElementById(
-              `applicant-${loanKey}-${applicantKey}`
-            );
-            if (row) {
-              row.remove();
+          window.editLoan = (loanKey, loanData) => {
+            document.getElementById("loanType").value = loanData.loanType;
+            document.getElementById("interestRate").value = loanData.interestRate;
+            document.getElementById("loanTenure").value = loanData.loanTenure;
+            document.getElementById("loanAmountRange").value = loanData.loanAmountRange;
+            document.getElementById("eligibilityCriteria").value = loanData.eligibilityCriteria;
+            document.getElementById("contactInfo").value = loanData.contactInfo;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const submitBtn = document.querySelector("#loanForm button[type='submit']");
+            submitBtn.textContent = "Update Loan";
+
+            loanForm.onsubmit = async (e) => {
+              e.preventDefault();
+              const updatedLoan = {
+                loanType: document.getElementById("loanType").value,
+                interestRate: parseFloat(document.getElementById("interestRate").value),
+                loanTenure: parseInt(document.getElementById("loanTenure").value),
+                loanAmountRange: document.getElementById("loanAmountRange").value,
+                eligibilityCriteria: document.getElementById("eligibilityCriteria").value,
+                contactInfo: document.getElementById("contactInfo").value,
+                email: auth.currentUser.email,
+              };
+
+              try {
+                await update(ref(db, `loans/${auth.currentUser.uid}/${loanKey}`), updatedLoan);
+                alert("Loan updated successfully!");
+                loanForm.reset();
+                submitBtn.textContent = "Submit";
+                loanForm.onsubmit = defaultSubmitHandler;
+              } catch (error) {
+                console.error("Error updating loan:", error);
+                alert("Failed to update loan.");
+              }
+            };
+          };
+
+          window.deleteLoan = async (loanKey) => {
+            if (confirm("Are you sure you want to delete this loan?")) {
+              try {
+                await remove(ref(db, `loans/${auth.currentUser.uid}/${loanKey}`));
+                alert("Loan deleted successfully.");
+              } catch (error) {
+                console.error("Error deleting loan:", error);
+                alert("Failed to delete loan.");
+              }
             }
-          }
+          };
 
           loadLoans();
         });
       });
-      
+
       toggleBtn.addEventListener("click", () => {
         dropdown.classList.toggle("show");
-
-        if (!userId) {
-          userNameElem.textContent = "Unknown User";
-          userEmailElem.textContent = investorEmail || "Unknown Email";
-          return;
-        }
-
-        // Changed the reference path here from 'investorUsers' to 'users'
+        const userId = auth.currentUser?.uid;
+        if (!userId) return;
         const userDetailsRef = ref(db, "users/" + userId);
-        get(userDetailsRef)
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              const data = snapshot.val();
-              userNameElem.textContent =
-                data.username || data.name || "No Name";
-              userEmailElem.textContent = data.email || investorEmail;
-            } else {
-              userNameElem.textContent = "User not found";
-              userEmailElem.textContent = investorEmail || "Unknown Email";
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching profile:", error);
-          });
+        get(userDetailsRef).then(snapshot => {
+          const data = snapshot.val() || {};
+          userNameElem.textContent = data.username || data.name || "No Name";
+          userEmailElem.textContent = data.email || "Unknown Email";
+        });
       });
-        document.querySelector(".edit-btn").addEventListener("click", () => {
-  window.location.href = "EditProfile.html";
-});
 
       window.addEventListener("click", (e) => {
         if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
           dropdown.classList.remove("show");
         }
-
       });
     </script>
   </head>
-
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo"><i class="bi bi-boxes"></i></div>
-      <h1>Investor & Business Connect</h1>
-      <div class="profile-icon" id="profileToggle">
-        <i class="bi bi-person-circle"></i>
-      </div>
-    </div>
-    <div class="profile-dropdown" id="profileDropdown">
-      <div class="profile-header">
-        <img
-          id="profileImage"
-          class="profile-pic"
-          src="./Assets/profile.png"
-          alt="User"
-        />
-        <h3 id="userName">Loading...</h3>
-        <p id="userEmail">Loading...</p>
-        <button
-          class="edit-btn"
-          onclick="window.location.href='./EditProfile.html'"
-        >
-          Edit Profile
-        </button>
-      </div>
-      <div class="profile-options">
-        <button id="logoutBtn">
-          <i class="bi bi-box-arrow-right"></i> Logout
-        </button>
-       
-      </div>
-    </div>
-  </header>
-
   <body style="font-family: Arial, sans-serif; margin: 20px">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo"><i class="bi bi-boxes"></i></div>
+        <h1>Investor & Business Connect</h1>
+        <div class="profile-icon" id="profileToggle">
+          <i class="bi bi-person-circle"></i>
+        </div>
+      </div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="profile-header">
+          <img id="profileImage" class="profile-pic" src="./Assets/profile.png" alt="User" />
+          <h3 id="userName">Loading...</h3>
+          <p id="userEmail">Loading...</p>
+          <button class="edit-btn" onclick="window.location.href='./EditProfile.html'">Edit Profile</button>
+        </div>
+        <div class="profile-options">
+          <button id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+        </div>
+      </div>
+    </header>
+
     <h1>Banker Dashboard</h1>
     <h2>Post Loan Details</h2>
     <form id="loanForm">
-      <label>Loan Type: <input type="text" id="loanType" required /></label
-      ><br />
-      <label
-        >Interest Rate (%):
-        <input type="number" id="interestRate" step="0.01" required /></label
-      ><br />
-      <label
-        >Loan Tenure (months):
-        <input type="number" id="loanTenure" required /></label
-      ><br />
-      <label
-        >Loan Amount Range:
-        <input type="text" id="loanAmountRange" required /></label
-      ><br />
-      <label
-        >Eligibility Criteria:
-        <input type="text" id="eligibilityCriteria" required /></label
-      ><br />
-      <label
-        >Contact Info: <input type="text" id="contactInfo" required /></label
-      ><br />
+      <label>Loan Type: <input type="text" id="loanType" required /></label><br />
+      <label>Interest Rate (%): <input type="number" id="interestRate" step="0.01" required /></label><br />
+      <label>Loan Tenure (months): <input type="number" id="loanTenure" required /></label><br />
+      <label>Loan Amount Range: <input type="text" id="loanAmountRange" required /></label><br />
+      <label>Eligibility Criteria: <input type="text" id="eligibilityCriteria" required /></label><br />
+      <label>Contact Info: <input type="text" id="contactInfo" required /></label><br />
       <button type="submit">Submit</button>
     </form>
 
