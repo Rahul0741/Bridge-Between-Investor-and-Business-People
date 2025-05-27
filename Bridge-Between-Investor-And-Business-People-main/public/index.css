@@ -8,6 +8,44 @@ body {
   font-family: 'Jost', sans-serif;
   background: #0f0c29;
   color: white;
+  scroll-behavior: smooth;
+}
+
+/* Header/Nav */
+header {
+  position: sticky;
+  top: 0;
+  background: #0f0c29;
+  padding: 20px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #6d44b8;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #6d44b8;
 }
 
 /* Hero Section */
@@ -36,6 +74,11 @@ body {
 .hero-image img {
   width: 450px;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.05);
 }
 
 .btn {
@@ -45,11 +88,12 @@ body {
   text-decoration: none;
   border-radius: 30px;
   font-size: 1rem;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
   background: #573b8a;
+  transform: translateY(-3px);
 }
 
 /* Future Section */
@@ -58,11 +102,17 @@ body {
   flex-direction: row-reverse;
   align-items: center;
   padding: 80px 10%;
+  gap: 30px;
 }
 
 .future-image img {
   width: 650px;
   border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.future-image img:hover {
+  transform: scale(1.03);
 }
 
 .future-text {
@@ -101,11 +151,13 @@ body {
   padding: 20px;
   border-radius: 10px;
   width: 250px;
-  transition: 0.3s;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
 }
 
 .card:hover {
   background: #302b63;
+  transform: translateY(-10px);
 }
 
 .card img {
@@ -133,17 +185,21 @@ body {
   gap: 30px;
 }
 
-.get-more h2, p {
+.get-more h2,
+p {
   color: #f4f4f4;
 }
 
 .more-cards .card {
   background: #1d1a39;
   color: #f4f4f4;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
 }
 
 .more-cards .card:hover {
   background: #302b63;
+  transform: translateY(-10px);
 }
 
 /* Footer */

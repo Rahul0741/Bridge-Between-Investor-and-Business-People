@@ -34,32 +34,19 @@
     </div>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      import { app } from "./firebase-config.js";
       import {
         getDatabase,
         ref,
         onValue,
         push,
-        update,
       } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyBysXOlYivEn0Xgq_jPRPtX40z-6wal91c",
-        authDomain: "trial-ef79c.firebaseapp.com",
-        databaseURL: "https://trial-ef79c-default-rtdb.firebaseio.com",
-        projectId: "trial-ef79c",
-        storageBucket: "trial-ef79c.appspot.com",
-        messagingSenderId: "340982645687",
-        appId: "1:340982645687:web:38ca6a5a273f68549cde32",
-      };
-
-      const app = initializeApp(firebaseConfig);
       const database = getDatabase(app);
-
       const businessEmail = localStorage.getItem("email");
       let selectedLoanPath = null;
 
-      // Render loans list from Firebase
+      // Render loans
       const renderLoans = (loans) => {
         const loansListDiv = document.getElementById("loansList");
         loansListDiv.innerHTML = "";
@@ -69,84 +56,121 @@
           Object.keys(userLoans).forEach((loanKey) => {
             const loan = userLoans[loanKey];
             const loanPath = `${userKey}/${loanKey}`;
+
             const loanDiv = document.createElement("div");
             loanDiv.classList.add("loan");
             loanDiv.innerHTML = `
-                        <h3>${loan.loanType}</h3>
-                        <p><strong>Contact Info:</strong> ${loan.contactInfo}</p>
-                        <p><strong>Eligibility Criteria:</strong> ${loan.eligibilityCriteria}</p>
-                        <p><strong>Loan Amount Range:</strong> ₹${loan.loanAmountRange}</p>
-                        <p><strong>Interest Rate:</strong> ${loan.interestRate}%</p>
-                        <p><strong>Loan Tenure:</strong> ${loan.loanTenure} months</p>
-                        <p><strong>Banker email:</strong> ${loan.email} </p>
-                        <button id="applyBtn-${loanPath}" onclick="applyLoan('${loanPath}')">Apply Loan</button>
-                    `;
+              <h3>${loan.loanType}</h3>
+              <p><strong>Contact Info:</strong> ${loan.contactInfo}</p>
+              <p><strong>Eligibility Criteria:</strong> ${
+                loan.eligibilityCriteria
+              }</p>
+              <p><strong>Loan Amount Range:</strong> ₹${parseInt(
+                loan.loanAmountRange
+              ).toLocaleString("en-IN")}</p>
+              <p><strong>Interest Rate:</strong> ${loan.interestRate}%</p>
+              <p><strong>Loan Tenure:</strong> ${loan.loanTenure} months</p>
+              <p><strong>Banker email:</strong> ${loan.email}</p>
+              <button id="applyBtn-${loanPath}" onclick="applyLoan('${loanPath}')">Apply Loan</button>
+            `;
             loansListDiv.appendChild(loanDiv);
-            updateApplyButtonStatus(loanPath, loan);
+
+            updateApplyButtonStatus(loanPath);
           });
         });
       };
 
-      // Update the apply button status based on loan status
-      const updateApplyButtonStatus = (loanPath, loan) => {
+      // Update apply button status
+      const updateApplyButtonStatus = (loanPath) => {
         const applyBtn = document.getElementById(`applyBtn-${loanPath}`);
         const applicantsRef = ref(database, `loans/${loanPath}/applicants`);
-        onValue(applicantsRef, (snapshot) => {
-          snapshot.forEach((applicantSnapshot) => {
-            const applicant = applicantSnapshot.val();
-            if (applicant.email === businessEmail) {
-              if (applicant.status === "approved") {
-                applyBtn.textContent = "Approved";
-                applyBtn.disabled = true;
-              } else if (applicant.status === "under_progress") {
-                applyBtn.textContent = "Approval in Progress";
-                applyBtn.disabled = true;
-              } else {
-                applyBtn.textContent = "Apply Loan";
+
+        onValue(
+          applicantsRef,
+          (snapshot) => {
+            let buttonUpdated = false;
+            snapshot.forEach((applicantSnapshot) => {
+              const applicant = applicantSnapshot.val();
+              if (applicant.email === businessEmail) {
+                if (applicant.status === "approved") {
+                  applyBtn.textContent = "Approved";
+                  applyBtn.disabled = true;
+                  buttonUpdated = true;
+                } else if (applicant.status === "under_progress") {
+                  applyBtn.textContent = "Approval in Progress";
+                  applyBtn.disabled = true;
+                  buttonUpdated = true;
+                }
               }
+            });
+
+            if (!buttonUpdated) {
+              applyBtn.textContent = "Apply Loan";
+              applyBtn.disabled = false;
             }
-          });
-        });
+          },
+          { onlyOnce: true }
+        );
       };
 
-      // Open the loan application form
+      // Open popup
       window.applyLoan = (loanPath) => {
         selectedLoanPath = loanPath;
         document.getElementById("applyLoanPopup").style.display = "block";
       };
 
-      // Close the loan application form
+      // Close popup
       const closePopup = () => {
         document.getElementById("applyLoanPopup").style.display = "none";
         selectedLoanPath = null;
       };
 
-      // Handle loan application form submission
+      // Submit application
       const applyLoanForm = document.getElementById("applyLoanForm");
       applyLoanForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const annualIncome = document.getElementById("annualIncome").value;
         const loanAmount = document.getElementById("loanAmount").value;
 
-        if (selectedLoanPath) {
-          const applicantData = {
-            email: businessEmail,
-            annualIncome: annualIncome,
-            loanAmount: loanAmount,
-            status: "under_progress", // Mark as under progress when applied
-          };
-          const applicantListRef = ref(
-            database,
-            `loans/${selectedLoanPath}/applicants`
-          );
-          push(applicantListRef, applicantData);
-          showAlert("Loan application submitted successfully!", "success");
-          closePopup();
-          updateApplyButtonStatus(selectedLoanPath); // Update button status
-        }
+        if (!selectedLoanPath) return;
+
+        const applicantListRef = ref(
+          database,
+          `loans/${selectedLoanPath}/applicants`
+        );
+
+        onValue(
+          applicantListRef,
+          (snapshot) => {
+            let alreadyApplied = false;
+
+            snapshot.forEach((applicantSnap) => {
+              const applicant = applicantSnap.val();
+              if (applicant.email === businessEmail) {
+                alreadyApplied = true;
+              }
+            });
+
+            if (alreadyApplied) {
+              showAlert("You have already applied for this loan.", "error");
+            } else {
+              const applicantData = {
+                email: businessEmail,
+                annualIncome,
+                loanAmount,
+                status: "under_progress",
+              };
+
+              push(applicantListRef, applicantData);
+              showAlert("Loan application submitted successfully!", "success");
+              closePopup();
+            }
+          },
+          { onlyOnce: true }
+        );
       });
 
-      // Firebase listener for the loan data
+      // Load loans
       const loansRef = ref(database, "loans");
       onValue(loansRef, (snapshot) => {
         if (snapshot.exists()) {
@@ -157,29 +181,7 @@
         }
       });
 
-      // Approve loan functionality
-      const approveLoan = (loanPath, applicantKey) => {
-        const applicantRef = ref(
-          database,
-          `loans/${loanPath}/applicants/${applicantKey}`
-        );
-        update(applicantRef, { status: "approved" });
-        showAlert("Loan approved!", "success");
-        updateApplyButtonStatus(loanPath); // Update button status to 'Approved'
-      };
-
-      // Reject loan functionality
-      const rejectLoan = (loanPath, applicantKey) => {
-        const applicantRef = ref(
-          database,
-          `loans/${loanPath}/applicants/${applicantKey}`
-        );
-        update(applicantRef, { status: "rejected" });
-        showAlert("Loan rejected!", "error");
-        updateApplyButtonStatus(loanPath); // Update button status to 'Apply Loan' (rejected)
-      };
-
-      // Show alert function
+      // Show alert
       function showAlert(message, type) {
         const alertBox = document.getElementById("alertBox");
         const alertMessage = document.getElementById("alertMessage");
@@ -188,10 +190,10 @@
         alertBox.style.display = "block";
         setTimeout(() => {
           alertBox.style.display = "none";
-        }, 3000); // Hide after 3 seconds
+        }, 3000);
       }
 
-      // Close alert box manually
+      // Close alert manually
       function closeAlert() {
         document.getElementById("alertBox").style.display = "none";
       }

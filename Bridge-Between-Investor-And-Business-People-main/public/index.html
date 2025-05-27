@@ -10,10 +10,27 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
+    <!-- Header/Nav Section -->
+    <header data-aos="fade-down">
+      <div class="logo">InvestConnect</div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="register.html">Sign Up / Sign In</a></li>
+        </ul>
+      </nav>
+    </header>
+
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" data-aos="fade-up">
       <div class="hero-text">
         <h1>Bridge Between Investor and Business People</h1>
         <p>Connect investors and businesses for a smarter future.</p>
@@ -25,7 +42,7 @@
     </section>
 
     <!-- Future Section -->
-    <section class="future">
+    <section class="future" id="future" data-aos="fade-up">
       <div class="future-image">
         <img src="./Assets/discuss.png" alt="Discussion" />
       </div>
@@ -41,21 +58,21 @@
     </section>
 
     <!-- Learn from Experts Section -->
-    <section class="experts">
+    <section class="experts" data-aos="fade-up">
       <h2>Learn from <span class="highlight">Experts</span></h2>
       <p>Industry-specific talks on the main stage.</p>
       <div class="expert-cards">
-        <div class="card">
+        <div class="card" data-aos="fade-up">
           <img src="./Assets/digital-solution.png" alt="Digital Solutions" />
           <h3>Digital Solutions</h3>
           <p>Use technology to solve business problems.</p>
         </div>
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
           <img src="./Assets/people-power.png" alt="People Power" />
           <h3>People Power</h3>
           <p>Optimize manpower to benefit your business.</p>
         </div>
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
           <img src="./Assets/biz-tomorrow.png" alt="Biz of Tomorrow" />
           <h3>Biz of Tomorrow</h3>
           <p>Forecast and dive into new business opportunities.</p>
@@ -64,21 +81,21 @@
     </section>
 
     <!-- Get More Section -->
-    <section class="get-more">
+    <section class="get-more" data-aos="fade-up">
       <h2>Get <span class="highlight">More</span> out of the Connect</h2>
       <p>Make the most of your time — grow, learn, and expand your network.</p>
       <div class="more-cards">
-        <div class="card">
+        <div class="card" data-aos="fade-up">
           <img src="./Assets/materclasses.png" alt="Mini Masterclasses" />
           <h3>Mini Masterclasses</h3>
           <p>Attend focused workshops and deep-dive sessions.</p>
         </div>
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
           <img src="./Assets/networking.png" alt="Networking Nights" />
           <h3>Networking Nights</h3>
           <p>Share insights, meet future partners and investors.</p>
         </div>
-        <div class="card">
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
           <img src="./Assets/site-visits.png" alt="Site Visits" />
           <h3>Site Visits</h3>
           <p>360-degree business cases — limited slots available!</p>
@@ -87,7 +104,7 @@
     </section>
 
     <!-- Footer Section -->
-    <footer>
+    <footer data-aos="fade-up">
       <div class="footer-left">
         <h2>See you there!</h2>
         <div class="social-icons">
@@ -95,8 +112,8 @@
           <a href="https://www.instagram.com/_itz_r_a_h_u_l_41/?next=%2F"
             ><i class="fab fa-instagram"></i
           ></a>
-          <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/"
-            ><i class="fab fa-linkedin-in"></i
+          <a href="https://www.linkedin.com/in/rahul-n-6b11a3283/">
+            <i class="fab fa-linkedin-in"></i
           ></a>
           <a href="#"><i class="fab fa-twitter"></i></a>
         </div>
@@ -110,5 +127,13 @@
         <p><strong>Phone Number:</strong> (123) 456 7890</p>
       </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
   </body>
 </html>
